@@ -36,6 +36,7 @@ const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <meta name="robots" content="noindex" /><!-- 预览阶段（占位图）；正式上线时移除 -->
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
   </head>

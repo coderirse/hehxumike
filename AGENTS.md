@@ -13,7 +13,7 @@
 - 板块：首页 / 作品 / 关于 / 动态 / 联系。**无博客**。
 - 语言：中文为主 + 英文点缀（小型大写衬线英文作装饰性小标）。不做完整 i18n。
 - 许可红线：**不引入 CC BY-NC 等禁止商用许可的模板 / 依赖**（magic-portfolio 已调研并因许可排除）。个人站存在卖画 / 接稿可能。
-- 部署：GitHub Actions（`withastro/action` + `actions/deploy-pages`）→ GitHub Pages 项目仓库 **`coderirse/hehxumike`**（`https://coderirse.github.io/hehxumike/`，`base: '/hehxumike'`）。**`coderirse.github.io` 是现有 Hexo 博客（绑 caeamer.com），绝不可把本项目推过去**。`deploy/CNAME` 暂存不部署，域名买好后再放回 `public/CNAME` 并把 `base` 改回 `/`。
+- 部署：GitHub Actions（`withastro/action` + `actions/deploy-pages`）→ GitHub Pages 项目仓库 **`coderirse/hehxumike`**，暂挂 **`https://caeamer.com/hehxumike/`**（项目站继承用户站 caeamer.com 的自定义域名；`coderirse.github.io/hehxumike/` 会 301 过来），`base: '/hehxumike'`。**`coderirse.github.io` 是现有 Hexo 博客（绑 caeamer.com），绝不可把本项目推过去**。`deploy/CNAME` 暂存不部署，域名买好后再放回 `public/CNAME` 并把 `base` 改回 `/`。
 - 作品是插画：布局用瀑布流（masonry），不要假设都是横图（常见 1:1、3:4）。
 - 状态：骨架与「美术馆白」五页已于 2026-11-22 建成；同日完成 **方案 R 五页完整变体**（`/r`、`/r/works`、`/r/about`、`/r/news`、`/r/contact`），375 / 1440 目检、筛选与灯箱实测通过。根路径仍是 A（美术馆白），待用户最后对比后决定是否把 R 升为正式站。
 
@@ -115,7 +115,7 @@ push `main` → Actions 构建部署 → 逐项确认：
 - [ ] R 变体五页正常（`/r/works`、`/r/about`、`/r/news`、`/r/contact`）
 - [ ] 灯箱可开合、键盘可导航
 - [ ] 移动端 375 / 桌面 1440 不破版
-- [ ] `https://coderirse.github.io/hehxumike/` 可访问；绑域名后 `https://www.HEHXumike.com` HTTPS 绿锁正常
+- [ ] `https://caeamer.com/hehxumike/` 可访问（github.io 链接 301 过去）；绑域名后 `https://www.HEHXumike.com` HTTPS 绿锁正常
 
 ## 10. 未决事项（动工前需用户确认）
 
@@ -133,4 +133,4 @@ push `main` → Actions 构建部署 → 逐项确认：
   - **待用户提供**：一张场景插画（人物 + 环境，横幅优先）
   - 用户定稿后：把 R 五页升为正式根路径、删除其余方案页与 `/styles`，或按用户选择改走其他方案
   教训：仅换配色被否决；用户要结构级差异且气质同频。
-- [ ] 部署：创建 `coderirse/hehxumike` 项目仓库 + Pages（GitHub Actions）→ `https://coderirse.github.io/hehxumike/`；**不要动 `coderirse.github.io`（现有博客，绑 caeamer.com）**。
+- [ ] 部署：`coderirse/hehxumike` 项目仓库 + Pages（GitHub Actions）已上线 → **`https://caeamer.com/hehxumike/`**（继承博客域名；github.io 链接 301）；**不要动 `coderirse.github.io`（现有博客，绑 caeamer.com）**。

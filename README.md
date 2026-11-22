@@ -4,7 +4,7 @@
 
 **www.HEHXumike.com** — 画家 HEHXumike 的个人静态作品展示网站。纯静态、零服务器成本，部署于 GitHub Pages，绑定独立域名。目标：**惊艳、艺术气息、作品是唯一主角**。
 
-> 状态：🚧 占位图阶段（2026-11-22）。「美术馆白」五页与「方案 R · 整站即插画」五页完整变体均已建成；根路径仍是美术馆白，R 在 `/r` 供最后对比。部署目标：`https://coderirse.github.io/hehxumike/`。
+> 状态：🚧 占位图阶段（2026-11-22）。「美术馆白」五页与「方案 R · 整站即插画」五页完整变体均已建成；根路径仍是美术馆白，R 在 `/r` 供最后对比。线上：`https://caeamer.com/hehxumike/`。
 
 ## 作品画像（设计输入）
 
@@ -134,7 +134,7 @@ order: 10
 
 ⚠️ `coderirse.github.io` 是现有 Hexo 博客（绑 `caeamer.com`），**不要把本项目推过去**。
 
-- 线上地址：`https://coderirse.github.io/hehxumike/`
+- 线上地址：**`https://caeamer.com/hehxumike/`**（项目站继承用户站 caeamer.com 的自定义域名；`coderirse.github.io/hehxumike/` 会 301 过来）
 - `astro.config.mjs` 已设 `base: '/hehxumike'`；站内链接统一走 `src/utils/url.ts` 的 `withBase`
 - Pages Source 选 **GitHub Actions**；workflow 已把 Node 设为 **24**（Astro 7 要求 ≥ 22.23.4）
 - `deploy/CNAME` 暂不部署（现在放了会让 Pages 立刻跳未解析的域名）
@@ -171,7 +171,8 @@ GitHub Pages 国内直连时快时慢。可把域名 DNS 托管到 **Cloudflare*
 - [ ] 界面定稿：R（/r）vs A / F / G，确认后把选中方案升为根路径并删临时页
 - [ ] 校准强调色、字体气质、首页 hero / R 热区
 - [ ] 内容录入：作品元数据 / 自述 / 展讯 / 社交链接
-- [ ] 上线 GitHub Pages（`coderirse/hehxumike`）+ 绑定域名
+- [x] 上线 GitHub Pages（`coderirse/hehxumike` → `https://caeamer.com/hehxumike/`，2026-11-22）
+- [ ] 绑定 www.HEHXumike.com（域名购买后：base 改 `/`、CNAME 放回 public）
 - [ ] （可选）Cloudflare 加速
 
 ## 许可与致谢
