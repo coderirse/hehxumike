@@ -1,6 +1,7 @@
 ---
-// 临时页：界面方案挑选（A–G 七套界面，定稿后删除本页与临时方案页）
+// 临时页：界面方案挑选（A–G + R 八套界面，定稿后删除本页与临时方案页）
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../utils/url';
 
 const groups = [
   {
@@ -8,17 +9,17 @@ const groups = [
     hint: '作品自己的语言：霓虹、卡牌、手帐 —— 注意占位图是随机照片，换成你的原作后这套会更明显',
     items: [
       {
-        href: '/r',
+        href: withBase('/r'),
         key: 'R',
         cn: '整站即插画',
         en: 'Living Painting',
         bg: '#232a24',
         border: false,
-        tag: '候选 · 新',
-        desc: 'rossdraws 式（原创复刻）：首屏一整幅画当界面，导航嵌在画里；往下接作品方格墙。需要你一张场景原作。',
+        tag: '候选 · 全站',
+        desc: 'rossdraws 式（原创复刻）：首屏一整幅画当界面，导航嵌在画里；已扩成五页完整站（作品/关于/动态/联系）。需要你一张场景原作。',
       },
       {
-        href: '/f',
+        href: withBase('/f'),
         key: 'F',
         cn: '霓虹夜场',
         en: 'Neon Night',
@@ -28,7 +29,7 @@ const groups = [
         desc: '暗底荧光粉青渐变、跑马灯横幅、霓虹画框卡阵——为板绘而生的夜场。',
       },
       {
-        href: '/g',
+        href: withBase('/g'),
         key: 'G',
         cn: '卡牌收藏墙',
         en: 'Card Vault',
@@ -38,7 +39,7 @@ const groups = [
         desc: '每件作品是一张收藏卡：渐变卡边、悬停 3D 倾斜 + 流光扫过，收藏册气质。',
       },
       {
-        href: '/e',
+        href: withBase('/e'),
         key: 'E',
         cn: '拼贴手帐',
         en: 'Scrapbook',
@@ -54,7 +55,7 @@ const groups = [
     hint: '画廊白、长廊、暗场满版——职业作品集常见的「安静舞台」打法，高饱和作品反而突出',
     items: [
       {
-        href: '/',
+        href: withBase('/'),
         key: 'A',
         cn: '美术馆白画册',
         en: 'Museum Catalogue',
@@ -64,7 +65,7 @@ const groups = [
         desc: '白底衬线字、白卡纸挂画框、瀑布流 + 系列筛选——高饱和插画的中性舞台。',
       },
       {
-        href: '/b',
+        href: withBase('/b'),
         key: 'B',
         cn: '全屏沉浸画廊',
         en: 'Immersive Wall',
@@ -74,7 +75,7 @@ const groups = [
         desc: '暗底满版图墙，无画框无说明，作品铺满屏幕即界面。',
       },
       {
-        href: '/c',
+        href: withBase('/c'),
         key: 'C',
         cn: '电影翻阅画册',
         en: 'Cinema Lookbook',
@@ -84,7 +85,7 @@ const groups = [
         desc: '整张画铺满首屏 + 大字压图开卷，往下一页一画交错翻阅。',
       },
       {
-        href: '/d',
+        href: withBase('/d'),
         key: 'D',
         cn: '横向长廊',
         en: 'Corridor',
@@ -98,12 +99,12 @@ const groups = [
 ];
 ---
 
-<BaseLayout title="界面方案挑选 · HEHXumike" description="七套完全不同的界面结构方案预览。">
+<BaseLayout title="界面方案挑选 · HEHXumike" description="八套完全不同的界面结构方案预览。">
   <header class="page-head" data-reveal>
     <p class="eyebrow">Layout Concepts · 界面方案</p>
     <h1>挑一个界面</h1>
     <p class="lede">
-      七套方案是<b>完全不同的界面结构</b>。上半部分和你的作品同频，下半部分是「安静衬托」的经典打法
+      八套方案是<b>完全不同的界面结构</b>。上半部分和你的作品同频，下半部分是「安静衬托」的经典打法
       —— 每个都点进去走一遍再选。
     </p>
   </header>

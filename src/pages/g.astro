@@ -7,6 +7,7 @@ import { ClientRouter } from 'astro:transitions';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Lightbox from '../components/Lightbox.astro';
+import { withBase } from '../utils/url';
 
 const works = (await getCollection('works')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -22,7 +23,7 @@ const metaOf = (w: (typeof works)[number]) =>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>方案 G · 卡牌收藏墙 — HEHXumike</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <ClientRouter />
   </head>
   <body>
@@ -48,7 +49,7 @@ const metaOf = (w: (typeof works)[number]) =>
             <div class="card">
               <a
                 class="ph"
-                href={w.data.image.src}
+                href={withBase(w.data.image.src)}
                 data-pswp
                 data-width={w.data.image.width}
                 data-height={w.data.image.height}
@@ -82,7 +83,7 @@ const metaOf = (w: (typeof works)[number]) =>
     </main>
 
     <footer class="foot">© 2026 HEHXumike · 画作版权归画家本人所有 · 收藏卡墙</footer>
-    <a class="switch" href="/styles">方案 G / 7 · 换个方案 →</a>
+    <a class="switch" href={withBase('/styles')}>方案 G / 7 · 换个方案 →</a>
     <Lightbox />
 
     <script>

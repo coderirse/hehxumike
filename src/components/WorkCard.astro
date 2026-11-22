@@ -2,6 +2,7 @@
 // 单件作品：挂画式卡片（点击打开灯箱）
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+import { withBase } from '../utils/url';
 
 interface Props {
   work: CollectionEntry<'works'>;
@@ -17,7 +18,7 @@ const meta = [d.year, d.medium, d.size].filter(Boolean).join(' · ');
 <figure class="work" data-series={d.series} data-reveal>
   <a
     class="mat"
-    href={d.image.src}
+    href={withBase(d.image.src)}
     data-pswp
     data-width={d.image.width}
     data-height={d.image.height}

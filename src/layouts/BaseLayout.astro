@@ -7,6 +7,7 @@ import '@fontsource/eb-garamond/500.css';
 import '@fontsource/eb-garamond/400-italic.css';
 import { ClientRouter } from 'astro:transitions';
 import '../styles/tokens.css';
+import { withBase } from '../utils/url';
 
 interface Props {
   title?: string;
@@ -19,10 +20,10 @@ const {
 } = Astro.props;
 
 const nav = [
-  { href: '/works', cn: '作品', en: 'Works' },
-  { href: '/about', cn: '关于', en: 'About' },
-  { href: '/news', cn: '动态', en: 'News' },
-  { href: '/contact', cn: '联系', en: 'Contact' },
+  { href: withBase('/works'), cn: '作品', en: 'Works' },
+  { href: withBase('/about'), cn: '关于', en: 'About' },
+  { href: withBase('/news'), cn: '动态', en: 'News' },
+  { href: withBase('/contact'), cn: '联系', en: 'Contact' },
 ];
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 ---
@@ -34,13 +35,13 @@ const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
   </head>
   <body>
     <header class="site-head">
-      <a class="brand" href="/">
+      <a class="brand" href={withBase('/')}>
         <span class="brand-name">HEHXumike</span>
         <span class="eyebrow">Paintings &amp; Illustrations</span>
       </a>

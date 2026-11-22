@@ -6,4 +6,7 @@ dist/
 # 原始超清图不入库（见 AGENTS.md §6）
 _originals/
 
+# 工具本地缓存
+.v2c/
+
 .DS_Store

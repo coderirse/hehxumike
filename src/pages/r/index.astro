@@ -1,0 +1,70 @@
+---
+// 方案 R · 首页：首屏一整幅画 = 界面本身，导航词嵌在画里；往下接方格作品墙
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import RLayout from '../../layouts/RLayout.astro';
+import RCell from '../../components/RCell.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import { withBase } from '../../utils/url';
+import scene from '../../assets/scene-placeholder.jpg';
+
+const works = (await getCollection('works')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+// 画中导航热区：坐标 = 画布百分比（left/top）。
+// 真实场景插画到位后，按画面构图微调这四个坐标即可。
+const hotspots = [
+  { label: '作品', en: 'gallery', href: '#gallery', x: 63, y: 32 },
+  { label: '关于', en: 'about', href: withBase('/r/about'), x: 76, y: 50 },
+  { label: '动态', en: 'news', href: withBase('/r/news'), x: 44, y: 64 },
+  { label: '联系', en: 'contact', href: withBase('/r/contact'), x: 24, y: 44 },
+];
+---
+
+<RLayout
+  title="HEHXumike · 画作集"
+  description="HEHXumike 的个人画作集——数字插画与板绘。整站即一幅画。"
+>
+  <section class="r-stage">
+    <Image
+      class="r-stage-img"
+      src={scene}
+      alt="场景插画（占位图，待替换为画家本人的场景原作）"
+      widths={[1600, 2400]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="r-veil" aria-hidden="true"></div>
+
+    <div class="r-topbar">
+      <a class="r-brand" href={withBase('/r')}>HEHXumike</a>
+    </div>
+
+    {
+      hotspots.map((h) => (
+        <a class="r-spot" href={h.href} style={`left:${h.x}%; top:${h.y}%`}>
+          <span class="cn">{h.label}</span>
+          <span class="en">{h.en}</span>
+        </a>
+      ))
+    }
+
+    <div class="r-cue" aria-hidden="true"><span></span>往下走进画廊</div>
+  </section>
+
+  <section id="gallery">
+    <header class="r-sec">
+      <h2>作品</h2>
+      <span class="r-en">Gallery · {works.length} 件</span>
+      <span class="spacer"></span>
+      <a class="r-more" href={withBase('/r/works')}>全部作品 →</a>
+    </header>
+    <div class="r-grid pswp-gallery">
+      {works.map((w) => <RCell work={w} />)}
+    </div>
+  </section>
+
+  <Lightbox />
+</RLayout>

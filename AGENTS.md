@@ -13,18 +13,18 @@
 - 板块：首页 / 作品 / 关于 / 动态 / 联系。**无博客**。
 - 语言：中文为主 + 英文点缀（小型大写衬线英文作装饰性小标）。不做完整 i18n。
 - 许可红线：**不引入 CC BY-NC 等禁止商用许可的模板 / 依赖**（magic-portfolio 已调研并因许可排除）。个人站存在卖画 / 接稿可能。
-- 部署：GitHub Actions（`withastro/action` + `actions/deploy-pages`）→ GitHub Pages。`public/CNAME` 固定为 `www.HEHXumike.com`，**勿删勿改**。
+- 部署：GitHub Actions（`withastro/action` + `actions/deploy-pages`）→ GitHub Pages 项目仓库 **`coderirse/hehxumike`**（`https://coderirse.github.io/hehxumike/`，`base: '/hehxumike'`）。**`coderirse.github.io` 是现有 Hexo 博客（绑 caeamer.com），绝不可把本项目推过去**。`deploy/CNAME` 暂存不部署，域名买好后再放回 `public/CNAME` 并把 `base` 改回 `/`。
 - 作品是插画：布局用瀑布流（masonry），不要假设都是横图（常见 1:1、3:4）。
-- 状态：骨架已于 2026-11-22 建成，构建与浏览器目检（首页 / 作品 / 灯箱 / 移动端）均通过。
+- 状态：骨架与「美术馆白」五页已于 2026-11-22 建成；同日完成 **方案 R 五页完整变体**（`/r`、`/r/works`、`/r/about`、`/r/news`、`/r/contact`），375 / 1440 目检、筛选与灯箱实测通过。根路径仍是 A（美术馆白），待用户最后对比后决定是否把 R 升为正式站。
 
 ## 3. 常用命令
 
 ```bash
 npm install
-npm run dev       # 本地开发 http://localhost:4321
-npm run build     # 产线构建 → dist/
-npm run preview   # 预览构建产物
-npm run new:work  # （待建）作品脚手架：建目录 + frontmatter 模板
+npm run dev       # 本地开发 http://localhost:4321/hehxumike/
+npm run build     # 产线构建 → dist/（base=/hehxumike）
+npm run preview   # 预览构建产物 http://localhost:4321/hehxumike/
+npm run new:work  # 作品脚手架：建目录 + frontmatter 模板
 ```
 
 ## 4. 目录约定
@@ -32,17 +32,24 @@ npm run new:work  # （待建）作品脚手架：建目录 + frontmatter 模板
 ```
 src/
 ├── assets/portrait.jpg           # 关于页肖像
+├── assets/scene-placeholder.jpg  # R 首屏场景占位（真实场景画到位后替换）
 ├── content/
 │   ├── works/<slug>/             # 每件作品一个目录：index.md（元数据）+ 图片（01-main.*、02-detail-1.* …）
 │   ├── news/*.md                 # 展讯 / 动态
 │   └── about.md                  # 艺术家自述
-├── components/                   # WorkCard（挂画卡）/ Lightbox（灯箱）
-├── layouts/BaseLayout.astro      # 字体 / 页头 / 页脚 / 滚动浮入
-├── pages/                        # index.astro / works.astro / about.astro / news.astro / contact.astro
-└── styles/tokens.css             # 设计 tokens + 全局样式
+├── components/                   # WorkCard（挂画卡）/ Lightbox（灯箱）/ RCell（R 方格）
+├── data/contact.ts               # 五个社交渠道（/contact 与 /r/contact 共用）
+├── layouts/BaseLayout.astro      # A 美术馆白
+├── layouts/RLayout.astro         # R 整站即插画（内页画带）
+├── pages/                        # 正式五页 + 方案页 b–g + styles + r/ 五页
+├── styles/tokens.css             # A 设计 tokens + 全局样式
+├── styles/r.css                  # R 变体样式
+└── utils/url.ts                  # withBase：部署前缀（/hehxumike）
 public/
-├── CNAME                         # www.HEHXumike.com（勿动）
-└── favicon.svg
+├── favicon.svg
+└── robots.txt
+deploy/
+└── CNAME                         # www.HEHXumike.com；域名买好后再放回 public/
 _originals/                       # 原始超清图（gitignore，不入库）
 scripts/new-work.mjs              # npm run new:work 脚手架
 ```
@@ -96,7 +103,7 @@ date:     date     # 完成日期，用于「动态」聚合
 4. 性能预算：Lighthouse 移动端 Performance ≥ 90；首页图片总传输 < 1.5MB。
 5. 响应式必须覆盖 375 / 768 / 1440；中英混排不破版（长英文串可换行）。
 6. 占位图阶段：占位资源集中在 `src/assets/works/_placeholder/`，**勿把占位图路径写死在组件里**，真实作品要能一键替换。
-7. **不要修改**：`public/CNAME`、`.github/workflows/deploy.yml`（除非用户明确要求）。
+7. **不要修改**：`.github/workflows/deploy.yml`（Node 24 已按 Astro 7 要求设好）、`deploy/CNAME`（域名阶段专用），除非用户明确要求。
 8. **不要提交**：`_originals/`、`node_modules/`、任何 > 5MB 文件。
 9. 保持纯静态：不引入需要服务端运行时的功能。
 
@@ -105,9 +112,10 @@ date:     date     # 完成日期，用于「动态」聚合
 push `main` → Actions 构建部署 → 逐项确认：
 
 - [ ] 五个页面正常（首页 / 作品 / 关于 / 动态 / 联系）
+- [ ] R 变体五页正常（`/r/works`、`/r/about`、`/r/news`、`/r/contact`）
 - [ ] 灯箱可开合、键盘可导航
-- [ ] 移动端瀑布流不破版
-- [ ] `https://www.HEHXumike.com` HTTPS 绿锁正常
+- [ ] 移动端 375 / 桌面 1440 不破版
+- [ ] `https://coderirse.github.io/hehxumike/` 可访问；绑域名后 `https://www.HEHXumike.com` HTTPS 绿锁正常
 
 ## 10. 未决事项（动工前需用户确认）
 
@@ -118,4 +126,11 @@ push `main` → Actions 构建部署 → 逐项确认：
 - [ ] 真实社交链接（`src/pages/contact.astro` 内 TODO 注释处）与真实肖像（`src/assets/portrait.jpg`）
 - [ ] 自述 / 履历 / 接稿文案（`src/content/about.md` 内 TODO 注释处）
 - [ ] 强调色校准：原作到位后从主色提取，替换 tokens.css 的 `--accent`
-- [ ] 界面方案定稿：用户已表态喜欢 **rossdraws.com**（整站即插画）方向。侦察确认：rossdraws.com 为 **Shopify 定制主题、闭源、无公开仓库**——不可扒站二次开发（插画/代码/动效均为其版权资产），走**原创复刻**：已建方案 R `/r`（首屏整幅画 + 画中导航热区 + yuumei 式方格作品墙；热区坐标配置在 `r.astro` 的 `hotspots` 数组，真实场景画到位后按构图校准）。备选 A–G 仍在 `/styles`。**待用户提供**：一张适合当首页的场景插画（人物+环境，横幅优先）。选定 R 后：按其气质把五个正式页面落成全站，删除其余临时方案页与 /styles。教训：仅换配色被否决；用户要结构级差异且气质同频。
+- [ ] 界面方案定稿：用户喜欢 **rossdraws.com**（整站即插画）方向；侦察确认其为 **Shopify 定制主题、闭源**，不可扒站，走**原创复刻**。已完成：
+  - 方案 R 五页完整变体：`/r`（首屏整幅画 + 画中导航热区）、`/r/works`（筛选 + 方格墙 + 灯箱）、`/r/about`、`/r/news`、`/r/contact`；共享 `RLayout` / `RCell` / `styles/r.css`
+  - 根路径仍是 A 美术馆白；`/styles` 保留 A–G + R 八套供最后对比
+  - 热区坐标在 `src/pages/r/index.astro` 的 `hotspots` 数组，真实场景画到位后按构图校准
+  - **待用户提供**：一张场景插画（人物 + 环境，横幅优先）
+  - 用户定稿后：把 R 五页升为正式根路径、删除其余方案页与 `/styles`，或按用户选择改走其他方案
+  教训：仅换配色被否决；用户要结构级差异且气质同频。
+- [ ] 部署：创建 `coderirse/hehxumike` 项目仓库 + Pages（GitHub Actions）→ `https://coderirse.github.io/hehxumike/`；**不要动 `coderirse.github.io`（现有博客，绑 caeamer.com）**。

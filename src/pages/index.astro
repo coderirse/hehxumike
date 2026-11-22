@@ -5,6 +5,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WorkCard from '../components/WorkCard.astro';
 import Lightbox from '../components/Lightbox.astro';
+import { withBase } from '../utils/url';
 
 const works = (await getCollection('works')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -22,15 +23,15 @@ const featuredMeta = [featured.data.year, featured.data.medium].filter(Boolean).
       <p class="hero-line">把每一张画，挂在它应得的墙上。</p>
       <p class="hero-sub">数字插画 · 板绘 —— 角色立绘 / 节日贺图 / 封面与自设</p>
       <div class="hero-cta">
-        <a class="btn" href="/works">进入画廊 <span class="eyebrow">Enter</span></a>
-        <a class="btn ghost" href="/contact">与我联系 <span class="eyebrow">Contact</span></a>
+        <a class="btn" href={withBase('/works')}>进入画廊 <span class="eyebrow">Enter</span></a>
+        <a class="btn ghost" href={withBase('/contact')}>与我联系 <span class="eyebrow">Contact</span></a>
       </div>
     </div>
 
     <figure class="hero-art" data-reveal>
       <a
         class="mat"
-        href={featured.data.image.src}
+        href={withBase(featured.data.image.src)}
         data-pswp
         data-width={featured.data.image.width}
         data-height={featured.data.image.height}
@@ -61,7 +62,7 @@ const featuredMeta = [featured.data.year, featured.data.medium].filter(Boolean).
       <h2>最新上架</h2>
       <span class="eyebrow">Recent Works</span>
       <span class="spacer"></span>
-      <a class="sec-more" href="/works">全部作品 →</a>
+      <a class="sec-more" href={withBase('/works')}>全部作品 →</a>
     </header>
     <div class="masonry pswp-gallery">
       {recent.map((w, i) => <WorkCard work={w} index={i} />)}

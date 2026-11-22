@@ -1,14 +1,7 @@
 ---
-// 联系：社交渠道一览（各平台主页链接待用户补充）
+// 联系：社交渠道一览（真实链接集中在 src/data/contact.ts）
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const links = [
-  { cn: '小红书', en: 'Xiaohongshu', handle: '@HEHXumike', href: '#' }, // TODO(用户)：补真实链接
-  { cn: '微博', en: 'Weibo', handle: '@HEHXumike', href: '#' }, // TODO(用户)：补真实链接
-  { cn: 'X', en: 'Twitter / X', handle: '@HEHXumike', href: '#' }, // TODO(用户)：补真实链接
-  { cn: 'Instagram', en: 'Instagram', handle: '@HEHXumike', href: '#' }, // TODO(用户)：补真实链接
-  { cn: '邮箱', en: 'E-mail', handle: 'hello@hehxumike.com', href: 'mailto:hello@hehxumike.com' },
-];
+import { CONTACT_LINKS as links } from '../data/contact';
 ---
 
 <BaseLayout title="联系 · HEHXumike" description="联系画家 HEHXumike——社交平台与邮箱。">

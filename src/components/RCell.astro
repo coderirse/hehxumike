@@ -1,0 +1,35 @@
+---
+// R 方案作品格：方形满铺，悬停出标题，点开灯箱
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import { withBase } from '../utils/url';
+
+interface Props {
+  work: CollectionEntry<'works'>;
+}
+
+const { work } = Astro.props;
+const d = work.data;
+const meta = [d.year, d.medium].filter(Boolean).join(' · ');
+---
+
+<a
+  class="r-cell"
+  href={withBase(d.image.src)}
+  data-pswp
+  data-width={d.image.width}
+  data-height={d.image.height}
+  data-series={d.series}
+  data-title={d.title}
+  data-title-en={d.titleEn ?? ''}
+  data-meta={meta}
+>
+  <Image
+    src={d.image}
+    alt={d.title}
+    widths={[480, 840]}
+    sizes="(max-width: 560px) 50vw, (max-width: 900px) 33vw, 25vw"
+    loading="lazy"
+  />
+  <span class="cap" aria-hidden="true">《{d.title}》</span>
+</a>

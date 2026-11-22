@@ -4,7 +4,7 @@
 
 **www.HEHXumike.com** — 画家 HEHXumike 的个人静态作品展示网站。纯静态、零服务器成本，部署于 GitHub Pages，绑定独立域名。目标：**惊艳、艺术气息、作品是唯一主角**。
 
-> 状态：🚧 骨架已建成（2026-11-22，占位图阶段），待原作高清图替换。技术选型见下方对比。
+> 状态：🚧 占位图阶段（2026-11-22）。「美术馆白」五页与「方案 R · 整站即插画」五页完整变体均已建成；根路径仍是美术馆白，R 在 `/r` 供最后对比。部署目标：`https://coderirse.github.io/hehxumike/`。
 
 ## 作品画像（设计输入）
 
@@ -34,44 +34,64 @@
 ## 网站结构
 
 ```
-/          首页    — 精选大图 + 一句宣言 + 最新动态入口
-/works     作品    — 系列筛选 + 瀑布流 + 灯箱（标题 / 年份 / 画种 / 尺寸）
-/about     关于    — 艺术家自述 + 肖像 + 履历 / 接稿说明
-/news      动态    — 展讯、上新、里程碑时间线
-/contact   联系    — 小红书 / 微博 / X / Instagram / 邮箱
+A · 美术馆白（根路径，现状）
+/          首页    — 精选大图 + 一句宣言 + 最新作品
+/works     作品    — 系列筛选 + 瀑布流 + 灯箱
+/about     关于    — 自述 + 肖像 + 履历 / 接稿
+/news      动态    — 展讯、上新、里程碑
+/contact   联系    — 五个社交渠道
+
+R · 整站即插画（/r，五页完整变体，优先候选）
+/r         首页    — 整幅场景画当界面 + 画中导航 + 方格作品墙
+/r/works   作品    — 画带 + 系列筛选 + 方格墙 + 灯箱
+/r/about   关于    — 画带 + 肖像与自述
+/r/news    动态    — 画带 + 时间线
+/r/contact 联系    — 画带 + 渠道列表
+
+/styles    界面方案挑选（A–G + R 八套，临时页）
 ```
 
-## 设计方向：美术馆白
+## 两套完整设计方向
+
+### A · 美术馆白（根路径，现状）
 
 - **底色**：暖白 `#FAFAF8`，墨色正文 `#1A1A1A`，发丝分隔线 `#E7E4DE`
 - **强调色**：待作品图到位后从主色提取（候选樱花粉 / 靛蓝），全站仅一处
-- **字体**：思源宋体 Noto Serif SC + 霞鹜文楷（中文）、EB Garamond（英文点缀），全部 OFL 开源许可，自托管子集化
-- **动效**：极克制 — 缓慢淡入、View Transitions 页面过渡、灯箱缩放，均 ≤ 300ms
-- **版式**：大留白、发丝线、作品编号（01 / 02…）、中英混排小字点缀
+- **字体**：思源宋体 Noto Serif SC + EB Garamond（英文点缀），OFL 自托管
+- **版式**：大留白、发丝线、作品编号、中英混排小字
+- 首版用占位图开发；真实作品到位后校准强调色与首页 hero
 
-首版用占位图开发；真实作品到位后校准强调色与首页 hero 排版。
+### R · 整站即插画（`/r`，优先候选）
+
+- 灵感来自 rossdraws.com 的设计模式（闭源 Shopify 站，**原创复刻**，不使用其任何素材）
+- 首屏一整幅场景画 = 界面本身，导航词嵌在画里；热区坐标可配置
+- 内页顶部一条画带，下方白底内容；作品页是 yuumei 式方格墙 + 灯箱
+- 黑白灰 + 图像，无强调色；EB Garamond 做英文小字
+- 真实场景画到位后替换 `src/assets/scene-placeholder.jpg` 并校准 `hotspots`
 
 ## 目录结构（规划）
 
 ```
 www.HEHXumike.com/
-├── .github/workflows/deploy.yml    # Pages 自动部署（withastro/action）
+├── .github/workflows/deploy.yml    # Pages 自动部署（Node 24 + withastro/action）
+├── deploy/CNAME                    # 域名买好后再放回 public/
 ├── public/
-│   ├── CNAME                       # www.HEHXumike.com（勿删）
-│   ├── fonts/                      # 子集化后的中英文字体（自托管）
-│   └── favicon.svg
+│   ├── favicon.svg
+│   └── robots.txt
 ├── src/
 │   ├── assets/portrait.jpg         # 关于页肖像（占位）
-│   ├── content/
-│   │   ├── works/<slug>/           # 每件作品一个目录：index.md + 图片（01-main.* …）
-│   │   ├── news/*.md               # 展讯 / 动态
-│   │   └── about.md                # 艺术家自述
-│   ├── components/                 # WorkCard（挂画卡）/ Lightbox（灯箱）
-│   ├── layouts/BaseLayout.astro    # 字体 / 页头 / 页脚 / 滚动浮入
-│   ├── pages/                      # index / works / about / news / contact
-│   └── styles/tokens.css           # 设计 tokens + 全局样式
+│   ├── assets/scene-placeholder.jpg# R 首屏场景（占位，待替换）
+│   ├── content/                    # works / news / about
+│   ├── components/                 # WorkCard / Lightbox / RCell
+│   ├── data/contact.ts             # 五个社交渠道（单一来源）
+│   ├── layouts/BaseLayout.astro    # A 美术馆白
+│   ├── layouts/RLayout.astro       # R 整站即插画
+│   ├── pages/                      # 正式五页 + b–g + r/ 五页 + styles
+│   ├── styles/tokens.css           # A 设计系统
+│   ├── styles/r.css                # R 设计系统
+│   └── utils/url.ts                # withBase 部署前缀
 ├── _originals/                     # 原始超清图（gitignore，不入库）
-├── AGENTS.md                       # 给 AI 代理的工程约定
+├── AGENTS.md
 └── README.md
 ```
 
@@ -79,9 +99,9 @@ www.HEHXumike.com/
 
 ```bash
 npm install
-npm run dev       # http://localhost:4321
-npm run build     # 产物在 dist/
-npm run preview   # 本地预览构建结果
+npm run dev       # http://localhost:4321/hehxumike/
+npm run build     # 产物在 dist/（base=/hehxumike）
+npm run preview   # 本地预览构建结果 http://localhost:4321/hehxumike/
 ```
 
 ## 如何添加一件作品
@@ -110,17 +130,21 @@ order: 10
 
 ## 部署：GitHub Pages + 域名绑定
 
-**仓库**（二选一）：
+**仓库**：`coderirse/hehxumike`（项目站，子路径部署）。
 
-- ✅ 推荐：`coderirse.github.io`（用户站点，根路径部署，绑域名零配置）
-- 备选：仓库直接命名 `www.HEHXumike.com`（需在 astro.config 配 base 路径）
+⚠️ `coderirse.github.io` 是现有 Hexo 博客（绑 `caeamer.com`），**不要把本项目推过去**。
 
-**步骤**：
+- 线上地址：`https://coderirse.github.io/hehxumike/`
+- `astro.config.mjs` 已设 `base: '/hehxumike'`；站内链接统一走 `src/utils/url.ts` 的 `withBase`
+- Pages Source 选 **GitHub Actions**；workflow 已把 Node 设为 **24**（Astro 7 要求 ≥ 22.23.4）
+- `deploy/CNAME` 暂不部署（现在放了会让 Pages 立刻跳未解析的域名）
 
-1. push 代码 → 仓库 Settings → Pages → Source 选 **GitHub Actions**
-2. 站点首次上线于 `https://coderirse.github.io`
-3. Pages 设置中 Custom domain 填 `www.HEHXumike.com`（`public/CNAME` 已含）
-4. 购买域名后配置 DNS（在域名服务商处）：
+**域名买好后**：
+
+1. 把 `deploy/CNAME` 放回 `public/CNAME`
+2. `astro.config.mjs`：`base: '/'`、`site: 'https://www.HEHXumike.com'`
+3. Pages 设置 Custom domain 填 `www.HEHXumike.com`
+4. DNS（域名服务商处）：
 
 | 类型 | 主机记录 | 值 |
 |---|---|---|
@@ -140,12 +164,15 @@ GitHub Pages 国内直连时快时慢。可把域名 DNS 托管到 **Cloudflare*
 ## Roadmap
 
 - [x] 拍板：技术方案 A（Astro）+ GitHub 用户名 `coderirse` + 站名 HEHXumike
-- [x] 搭建骨架：设计 tokens / 五个页面 / 灯箱 / 瀑布流 / 系列筛选 / 自托管字体（2026-11-22）
-- [ ] 替换占位图：删除 `src/content/works/placeholder-*`，换入原作高清图（你提供首批 5–10 张）
-- [ ] 校准强调色、字体气质、首页 hero
+- [x] 搭建骨架：五页 / 灯箱 / 瀑布流 / 系列筛选 / 自托管字体（2026-11-22）
+- [x] 方案 R 五页完整变体（/r）+ 375 / 1440 目检（2026-11-22）
+- [x] `new:work` 脚手架 / 社交链接单一来源 / 部署前缀 `withBase`
+- [ ] 替换占位图：删除 `src/content/works/placeholder-*`，换入原作高清图（首批 5–10 张）
+- [ ] 界面定稿：R（/r）vs A / F / G，确认后把选中方案升为根路径并删临时页
+- [ ] 校准强调色、字体气质、首页 hero / R 热区
 - [ ] 内容录入：作品元数据 / 自述 / 展讯 / 社交链接
-- [ ] 上线 GitHub Pages + 绑定域名
-- [ ] （可选）Cloudflare 加速、`new:work` 脚手架脚本
+- [ ] 上线 GitHub Pages（`coderirse/hehxumike`）+ 绑定域名
+- [ ] （可选）Cloudflare 加速
 
 ## 许可与致谢
 
