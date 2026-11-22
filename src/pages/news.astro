@@ -1,0 +1,74 @@
+---
+// 动态：展讯 / 上新 / 站点 时间线
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const items = (await getCollection('news')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const rendered = await Promise.all(
+  items.map(async (n) => ({ ...n, Content: (await render(n)).Content }))
+);
+const fmt = (d: Date) => `${d.getFullYear()} 年 ${d.getMonth() + 1} 月`;
+---
+
+<BaseLayout title="动态 · HEHXumike" description="HEHXumike 的展讯与上新动态。">
+  <header class="page-head" data-reveal>
+    <p class="eyebrow">News · 动态</p>
+    <h1>展讯与上新</h1>
+  </header>
+
+  <ol class="timeline">
+    {
+      rendered.map(({ data, Content }) => (
+        <li data-reveal>
+          <time>{fmt(data.date)}</time>
+          <div class="item">
+            <span class="tag eyebrow">{data.tag}</span>
+            <h3>{data.title}</h3>
+            <Content />
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</BaseLayout>
+
+<style>
+  .timeline {
+    list-style: none;
+    padding: 0 0 clamp(3rem, 7vw, 5.5rem);
+    margin: 0;
+  }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0.4rem 2.5rem;
+    padding: 1.9rem 0;
+    border-top: 1px solid var(--line);
+  }
+  .timeline time {
+    color: var(--muted);
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    padding-top: 0.2rem;
+  }
+  .item .tag {
+    display: inline-block;
+    margin-bottom: 0.4rem;
+  }
+  .item h3 {
+    font-size: 1.0625rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.4rem;
+  }
+  .item :global(p) {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  @media (max-width: 640px) {
+    .timeline li {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

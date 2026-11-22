@@ -1,0 +1,89 @@
+---
+// 全站骨架：自托管字体 / 页头 / 页脚 / 滚动浮入动效
+import '@fontsource/noto-serif-sc/400.css';
+import '@fontsource/noto-serif-sc/600.css';
+import '@fontsource/eb-garamond/400.css';
+import '@fontsource/eb-garamond/500.css';
+import '@fontsource/eb-garamond/400-italic.css';
+import { ClientRouter } from 'astro:transitions';
+import '../styles/tokens.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'HEHXumike · 个人画作集',
+  description = 'HEHXumike 的个人画作集——数字插画与板绘。把每一张画，挂在它应得的墙上。',
+} = Astro.props;
+
+const nav = [
+  { href: '/works', cn: '作品', en: 'Works' },
+  { href: '/about', cn: '关于', en: 'About' },
+  { href: '/news', cn: '动态', en: 'News' },
+  { href: '/contact', cn: '联系', en: 'Contact' },
+];
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <ClientRouter />
+  </head>
+  <body>
+    <header class="site-head">
+      <a class="brand" href="/">
+        <span class="brand-name">HEHXumike</span>
+        <span class="eyebrow">Paintings &amp; Illustrations</span>
+      </a>
+      <nav aria-label="主导航">
+        {
+          nav.map((item) => (
+            <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+              <span class="nav-cn">{item.cn}</span>
+              <span class="eyebrow">{item.en}</span>
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <slot />
+    </main>
+
+    <footer class="site-foot">
+      <span>
+        © {new Date().getFullYear()} HEHXumike <span class="dot">·</span> 画作版权归画家本人所有
+      </span>
+      <span class="eyebrow">把每一张画，挂在它应得的墙上</span>
+    </footer>
+
+    <script>
+      // 滚动浮入：进入视口后加 .in（页面首次载入与切换后都会触发）
+      function reveal() {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.12 }
+        );
+        document.querySelectorAll('[data-reveal]:not(.in)').forEach((el) => io.observe(el));
+      }
+      document.addEventListener('astro:page-load', reveal);
+    </script>
+  </body>
+</html>

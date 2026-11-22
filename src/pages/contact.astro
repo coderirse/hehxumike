@@ -1,0 +1,90 @@
+---
+// 联系：社交渠道一览（各平台主页链接待用户补充）
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const links = [
+  { cn: '小红书', en: 'Xiaohongshu', handle: '@HEHXumike', href: '#' }, // TODO(用户)：补真实链接
+  { cn: '微博', en: 'Weibo', handle: '@HEHXumike', href: '#' }, // TODO(用户)：补真实链接
+  { cn: 'X', en: 'Twitter / X', handle: '@HEHXumike', href: '#' }, // TODO(用户)：补真实链接
+  { cn: 'Instagram', en: 'Instagram', handle: '@HEHXumike', href: '#' }, // TODO(用户)：补真实链接
+  { cn: '邮箱', en: 'E-mail', handle: 'hello@hehxumike.com', href: 'mailto:hello@hehxumike.com' },
+];
+---
+
+<BaseLayout title="联系 · HEHXumike" description="联系画家 HEHXumike——社交平台与邮箱。">
+  <header class="page-head" data-reveal>
+    <p class="eyebrow">Contact · 联系</p>
+    <h1>找到我</h1>
+    <p class="lede">约稿、交流，或只是打个招呼，都在这里。</p>
+  </header>
+
+  <ul class="channels">
+    {
+      links.map((l) => (
+        <li data-reveal>
+          <a
+            href={l.href}
+            {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}
+          >
+            <span class="ch-cn">{l.cn}</span>
+            <span class="eyebrow">{l.en}</span>
+            <span class="ch-handle">{l.handle}</span>
+            <span class="ch-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  .channels {
+    list-style: none;
+    padding: 0 0 clamp(3rem, 7vw, 5.5rem);
+  }
+  .channels a {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    align-items: baseline;
+    gap: 1.25rem;
+    padding: 1.6rem 0.25rem;
+    border-top: 1px solid var(--line);
+    transition:
+      padding-left 0.35s var(--ease),
+      background 0.35s var(--ease);
+  }
+  .channels li:last-child a {
+    border-bottom: 1px solid var(--line);
+  }
+  .channels a:hover {
+    padding-left: 1rem;
+    background: #fff;
+  }
+  .ch-cn {
+    font-size: 1.1875rem;
+    letter-spacing: 0.1em;
+  }
+  .ch-handle {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .ch-arrow {
+    color: var(--muted);
+    transition:
+      transform 0.35s var(--ease),
+      color 0.3s;
+  }
+  .channels a:hover .ch-arrow {
+    transform: translate(2px, -2px);
+    color: var(--ink);
+  }
+  @media (max-width: 640px) {
+    .channels a {
+      grid-template-columns: 1fr auto;
+      row-gap: 0.3rem;
+    }
+    .channels .eyebrow {
+      display: none;
+    }
+  }
+</style>

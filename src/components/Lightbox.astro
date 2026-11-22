@@ -1,0 +1,74 @@
+---
+// PhotoSwipe 灯箱：底部字幕展示作品信息（标题 / 英文 / 材质年代）
+---
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/dist/photoswipe.css';
+
+  let lightbox: any;
+  function init() {
+    if (!document.querySelector('.pswp-gallery')) return;
+    lightbox?.destroy?.();
+    lightbox = new PhotoSwipeLightbox({
+      gallery: '.pswp-gallery',
+      children: 'a[data-pswp]',
+      pswpModule: () => import('photoswipe'),
+      showHideAnimationType: 'fade',
+      zoom: false,
+      bgOpacity: 0.92,
+    });
+    // 底部字幕：从卡片 data-* 读取作品信息
+    lightbox.on('uiRegister', () => {
+      lightbox.pswp.ui.registerElement({
+        name: 'artwork-caption',
+        order: 8,
+        isButton: false,
+        appendTo: 'root',
+        onInit: (el: HTMLElement, pswp: any) => {
+          lightbox.pswp.on('change', () => {
+            const d = pswp.currSlide?.data?.element?.dataset ?? {};
+            el.innerHTML =
+              `<span class="cap-title">${d.title ?? ''}</span>` +
+              (d.titleEn ? `<span class="cap-en">${d.titleEn}</span>` : '') +
+              `<span class="cap-meta">${d.meta ?? ''}</span>`;
+          });
+        },
+      });
+    });
+    lightbox.init();
+  }
+  document.addEventListener('astro:page-load', init);
+</script>
+
+<style is:global>
+  .pswp__artwork-caption {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    text-align: center;
+    color: #fafaf8;
+    pointer-events: none;
+  }
+  .pswp__artwork-caption .cap-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+  }
+  .pswp__artwork-caption .cap-en {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .pswp__artwork-caption .cap-meta {
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+</style>

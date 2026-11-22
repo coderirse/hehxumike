@@ -1,0 +1,94 @@
+---
+// 作品画廊：系列筛选 + 瀑布流 + 灯箱
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorkCard from '../components/WorkCard.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { SERIES } from '../content.config';
+
+const works = (await getCollection('works')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout
+  title="作品 · HEHXumike"
+  description="HEHXumike 的全部画作——按系列浏览：角色插画、节日贺图、封面与自设、速写与练习。"
+>
+  <header class="page-head" data-reveal>
+    <p class="eyebrow">Works · 画廊</p>
+    <h1>作品</h1>
+    <p class="lede">共 {works.length} 件 · 按完成时间倒序</p>
+  </header>
+
+  <div class="filter" data-reveal>
+    <button class="on" data-filter="*">全部</button>
+    {SERIES.map((s) => <button data-filter={s}>{s}</button>)}
+  </div>
+
+  <div class="masonry pswp-gallery gallery">
+    {works.map((w, i) => <WorkCard work={w} index={i} />)}
+  </div>
+  <Lightbox />
+</BaseLayout>
+
+<script>
+  // 系列筛选：隐藏非该系列卡片，瀑布流自动回流
+  document.addEventListener('astro:page-load', () => {
+    const gallery = document.querySelector('.gallery');
+    if (!gallery) return;
+    const btns = document.querySelectorAll<HTMLButtonElement>('.filter button');
+    btns.forEach((b) =>
+      b.addEventListener('click', () => {
+        btns.forEach((x) => x.classList.toggle('on', x === b));
+        const f = b.dataset.filter ?? '*';
+        gallery.querySelectorAll<HTMLElement>('.work').forEach((w) => {
+          w.hidden = f !== '*' && w.dataset.series !== f;
+        });
+      })
+    );
+  });
+</script>
+
+<style>
+  .filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.75rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 2.5rem;
+  }
+  .filter button {
+    background: none;
+    border: none;
+    padding: 0.2rem 0;
+    font: inherit;
+    font-size: 0.9375rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s var(--ease);
+  }
+  .filter button::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.1rem;
+    width: 100%;
+    height: 1px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transition: transform 0.35s var(--ease);
+  }
+  .filter button.on {
+    color: var(--ink);
+  }
+  .filter button.on::after {
+    transform: scaleX(1);
+  }
+  .gallery {
+    padding-bottom: clamp(3rem, 7vw, 5.5rem);
+  }
+</style>

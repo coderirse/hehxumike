@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 美术馆白：细框 + 画字 -->
+  <rect x="5" y="5" width="54" height="54" fill="#fafaf8" stroke="#1a1a1a" stroke-width="2.5"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Georgia, 'Songti SC', 'SimSun', serif" font-size="32" fill="#1a1a1a">画</text>
+</svg>

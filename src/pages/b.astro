@@ -1,0 +1,237 @@
+---
+// 方案 B · 全屏沉浸画廊：暗底满版图墙，无画框无杂质，作品即界面（预览用临时页）
+import '@fontsource/noto-serif-sc/400.css';
+import '@fontsource/noto-serif-sc/600.css';
+import '@fontsource/eb-garamond/400.css';
+import { ClientRouter } from 'astro:transitions';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Lightbox from '../components/Lightbox.astro';
+
+const works = (await getCollection('works')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const metaOf = (w: (typeof works)[number]) =>
+  [w.data.year, w.data.medium].filter(Boolean).join(' · ');
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>方案 B · 全屏沉浸画廊 — HEHXumike</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <ClientRouter />
+  </head>
+  <body>
+    <header class="bar">
+      <a class="brand" href="/">HEHXumike</a>
+      <nav aria-label="预览导航（装饰）">
+        <span>作品</span><span>关于</span><span>动态</span><span>联系</span>
+      </nav>
+    </header>
+
+    <!-- 满版图墙：作品直接铺满屏幕，没有任何画框 -->
+    <main class="wall pswp-gallery">
+      <div class="tile">
+        <p class="kicker">Immersive Wall</p>
+        <p class="big">HEHXumike<br /><em>数字插画 · 板绘</em></p>
+        <p class="count">墙上 {works.length} 件 · 点击任意一张放大</p>
+      </div>
+      {
+        works.map((w, i) => (
+          <a
+            class="cell"
+            href={w.data.image.src}
+            data-pswp
+            data-width={w.data.image.width}
+            data-height={w.data.image.height}
+            data-title={w.data.title}
+            data-title-en={w.data.titleEn ?? ''}
+            data-meta={metaOf(w)}
+          >
+            <Image
+              src={w.data.image}
+              alt={w.data.title}
+              widths={[560, 960]}
+              sizes="(max-width: 700px) 50vw, 33vw"
+              loading={i < 6 ? 'eager' : 'lazy'}
+            />
+            <span class="veil" aria-hidden="true" />
+            <span class="cap" aria-hidden="true">
+              <b>《{w.data.title}》</b>
+              <i>{w.data.titleEn ?? ''} · {w.data.year}</i>
+            </span>
+          </a>
+        ))
+      }
+    </main>
+
+    <a class="switch" href="/styles">方案 B / 5 · 换个方案 →</a>
+    <Lightbox />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --paper: #0f0f0e;
+    --bone: #e8e4da;
+    --dim: #8b877d;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+  body {
+    background: var(--paper);
+    color: var(--bone);
+    font-family: 'Noto Serif SC', serif;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* 悬浮在图墙上的极简条（反色混合，压在任何图上都可读） */
+  .bar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1.1rem clamp(1rem, 3vw, 2.2rem);
+    mix-blend-mode: difference;
+    color: #fff;
+  }
+  .brand {
+    font-family: 'EB Garamond', serif;
+    letter-spacing: 0.08em;
+    font-size: 1.02rem;
+  }
+  .bar nav {
+    display: flex;
+    gap: 1.6rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    opacity: 0.85;
+  }
+
+  .wall {
+    columns: 3 260px;
+    column-gap: 6px;
+    padding: 0;
+  }
+  .tile,
+  .cell {
+    break-inside: avoid;
+    position: relative;
+    display: block;
+  }
+  .tile {
+    background: #161614;
+    border: 1px solid #262624;
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.9rem;
+    min-height: 300px;
+  }
+  .kicker {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+  .big {
+    font-size: 1.5rem;
+    line-height: 1.55;
+    letter-spacing: 0.06em;
+  }
+  .big em {
+    font-style: normal;
+    color: var(--dim);
+    font-size: 0.95rem;
+  }
+  .count {
+    color: var(--dim);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+  .cell img {
+    width: 100%;
+    height: auto;
+  }
+  .cell .veil {
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 0.3);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .cell .cap {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+    text-shadow: 0 1px 8px rgb(0 0 0 / 0.6);
+  }
+  .cell .cap b {
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+  }
+  .cell .cap i {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.72rem;
+    opacity: 0.8;
+  }
+  .cell:hover .veil {
+    opacity: 1;
+  }
+  .cell:hover .cap {
+    opacity: 1;
+    transform: none;
+  }
+
+  .switch {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 10;
+    font-family: 'EB Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--dim);
+    background: rgb(15 15 14 / 0.82);
+    border: 1px solid #2c2c29;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+  }
+  .switch:hover {
+    color: var(--bone);
+  }
+  @media (max-width: 640px) {
+    .bar nav {
+      display: none;
+    }
+  }
+</style>

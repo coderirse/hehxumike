@@ -1,0 +1,9 @@
+# 依赖与构建产物
+node_modules/
+dist/
+.astro/
+
+# 原始超清图不入库（见 AGENTS.md §6）
+_originals/
+
+.DS_Store

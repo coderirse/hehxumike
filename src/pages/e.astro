@@ -1,0 +1,297 @@
+---
+// 方案 E · 拼贴手帐：胶带宝丽来墙，微微歪斜的手作感（预览用临时页）
+import '@fontsource/noto-serif-sc/400.css';
+import '@fontsource/noto-serif-sc/600.css';
+import '@fontsource/eb-garamond/400.css';
+import '@fontsource/eb-garamond/400-italic.css';
+import { ClientRouter } from 'astro:transitions';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Lightbox from '../components/Lightbox.astro';
+
+const works = (await getCollection('works')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const tilts = [-2.4, 1.8, -1.3, 2.6, -1.9, 1.4, -2.8, 2.1, -1.6, 1.6];
+const metaOf = (w: (typeof works)[number]) =>
+  [w.data.titleEn ?? '', w.data.year].filter(Boolean).join(' · ');
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>方案 E · 拼贴手帐 — HEHXumike</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <ClientRouter />
+  </head>
+  <body>
+    <header class="top">
+      <span class="brand">HEHXumike <i>· 手帐画廊</i></span>
+      <nav aria-label="预览导航（装饰）">
+        <span>作品</span><span>关于</span><span>动态</span><span>联系</span>
+      </nav>
+    </header>
+
+    <main>
+      <section class="note">
+        <p>
+          嗨，这里贴着我这一年画的小画。<br />
+          点开任意一张，可以放大看细节。
+        </p>
+        <span class="sig">— XUMIK 留</span>
+      </section>
+
+      <!-- 宝丽来墙：胶带 + 歪斜 + 白边厚底 -->
+      <section class="wall pswp-gallery">
+        {
+          works.map((w, i) => (
+            <figure class="polaroid" style={`--tilt:${tilts[i % tilts.length]}deg`}>
+              <span class="tape" aria-hidden="true" />
+              <a
+                href={w.data.image.src}
+                data-pswp
+                data-width={w.data.image.width}
+                data-height={w.data.image.height}
+                data-title={w.data.title}
+                data-title-en={w.data.titleEn ?? ''}
+                data-meta={[w.data.year, w.data.medium].filter(Boolean).join(' · ')}
+              >
+                <Image
+                  src={w.data.image}
+                  alt={w.data.title}
+                  widths={[520, 900]}
+                  sizes="(max-width: 700px) 46vw, 30vw"
+                  loading={i < 6 ? 'eager' : 'lazy'}
+                />
+              </a>
+              <figcaption>
+                <b>《{w.data.title}》</b>
+                <span>{metaOf(w)}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </section>
+
+      <div class="stamp" aria-hidden="true">XUMIK·画</div>
+    </main>
+
+    <footer class="foot">© 2026 HEHXumike · 画作版权归画家本人所有</footer>
+    <a class="switch" href="/styles">方案 E / 5 · 换个方案 →</a>
+    <Lightbox />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --paper: #f6f0e1;
+    --ink: #33302a;
+    --dim: #8d8574;
+    --accent: #c9403a;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+  }
+  /* 纸面颗粒 */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.05'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 1.6rem clamp(1.25rem, 4vw, 3rem) 0;
+  }
+  .brand {
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+  }
+  .brand i {
+    font-style: normal;
+    color: var(--dim);
+    font-size: 0.85rem;
+  }
+  .top nav {
+    display: flex;
+    gap: 1.6rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    color: var(--dim);
+  }
+
+  /* 手写便签 */
+  .note {
+    max-width: 30rem;
+    margin: 3rem auto 1rem;
+    background: #fff8dd;
+    padding: 1.5rem 1.7rem 1.2rem;
+    transform: rotate(-1.2deg);
+    box-shadow: 0 12px 28px rgb(90 74 40 / 0.14);
+    position: relative;
+    font-size: 0.98rem;
+    line-height: 2;
+  }
+  .note::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 96px;
+    height: 26px;
+    background: rgb(233 203 133 / 0.6);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+  }
+  .sig {
+    display: block;
+    margin-top: 0.4rem;
+    text-align: right;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    color: var(--dim);
+    font-size: 0.85rem;
+  }
+
+  .wall {
+    columns: 3 240px;
+    column-gap: 2.6rem;
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 2.5rem clamp(1.25rem, 4vw, 3rem) 1rem;
+  }
+  .polaroid {
+    break-inside: avoid;
+    position: relative;
+    background: #fff;
+    padding: 12px 12px 48px;
+    margin: 0 0 2.2rem;
+    transform: rotate(var(--tilt));
+    box-shadow: 0 10px 26px rgb(60 50 30 / 0.16);
+    transition:
+      transform 0.45s cubic-bezier(0.22, 0.61, 0.21, 1),
+      box-shadow 0.45s;
+  }
+  .wall .polaroid:nth-child(3n + 2) {
+    margin-top: 1.6rem;
+  }
+  .wall .polaroid:nth-child(3n) {
+    margin-top: 0.8rem;
+  }
+  .polaroid:hover {
+    transform: rotate(0) scale(1.03);
+    box-shadow: 0 18px 40px rgb(60 50 30 / 0.22);
+    z-index: 3;
+  }
+  .polaroid .tape {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 92px;
+    height: 27px;
+    background: rgb(233 203 133 / 0.6);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+    z-index: 2;
+  }
+  .polaroid img {
+    width: 100%;
+    height: auto;
+    background: #eee;
+  }
+  .polaroid figcaption {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .polaroid figcaption b {
+    font-weight: 600;
+    font-size: 0.92rem;
+    letter-spacing: 0.04em;
+  }
+  .polaroid figcaption span {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.72rem;
+    color: var(--dim);
+  }
+
+  /* 圆形红章 */
+  .stamp {
+    width: 122px;
+    height: 122px;
+    margin: 2.5rem auto 0;
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--accent);
+    font-size: 1.05rem;
+    letter-spacing: 0.22em;
+    line-height: 1.6;
+    transform: rotate(-10deg);
+    opacity: 0.8;
+  }
+
+  .foot {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 2.5rem clamp(1.25rem, 4vw, 3rem);
+    color: var(--dim);
+    font-size: 0.8rem;
+  }
+  .switch {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 10;
+    font-family: 'EB Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--dim);
+    background: rgb(246 240 225 / 0.88);
+    border: 1px solid #ddd3ba;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+  }
+  .switch:hover {
+    color: var(--ink);
+  }
+  @media (max-width: 640px) {
+    .top nav {
+      display: none;
+    }
+  }
+</style>

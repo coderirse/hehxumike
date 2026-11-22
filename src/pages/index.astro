@@ -1,0 +1,172 @@
+---
+// 首页：宣言 + 精选挂画 + 最新上架
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorkCard from '../components/WorkCard.astro';
+import Lightbox from '../components/Lightbox.astro';
+
+const works = (await getCollection('works')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const featured = works.find((w) => w.data.featured) ?? works[0];
+const recent = works.slice(0, 6);
+const featuredMeta = [featured.data.year, featured.data.medium].filter(Boolean).join(' · ');
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="hero-text" data-reveal>
+      <p class="eyebrow">Personal Gallery · Est. 2026</p>
+      <h1 class="hero-name">HEH<em>Xumike</em></h1>
+      <p class="hero-line">把每一张画，挂在它应得的墙上。</p>
+      <p class="hero-sub">数字插画 · 板绘 —— 角色立绘 / 节日贺图 / 封面与自设</p>
+      <div class="hero-cta">
+        <a class="btn" href="/works">进入画廊 <span class="eyebrow">Enter</span></a>
+        <a class="btn ghost" href="/contact">与我联系 <span class="eyebrow">Contact</span></a>
+      </div>
+    </div>
+
+    <figure class="hero-art" data-reveal>
+      <a
+        class="mat"
+        href={featured.data.image.src}
+        data-pswp
+        data-width={featured.data.image.width}
+        data-height={featured.data.image.height}
+        data-title={featured.data.title}
+        data-title-en={featured.data.titleEn ?? ''}
+        data-meta={featuredMeta}
+      >
+        <Image
+          src={featured.data.image}
+          alt={featured.data.title}
+          widths={[640, 1080]}
+          sizes="(max-width: 900px) 88vw, 40vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </a>
+      <figcaption class="hero-cap">
+        <span class="eyebrow">Featured · 精选</span>
+        <span>《{featured.data.title}》 {featured.data.year}</span>
+      </figcaption>
+    </figure>
+
+    <span class="hero-vert" aria-hidden="true">把每一张画，挂在它应得的墙上</span>
+  </section>
+
+  <section class="latest">
+    <header class="sec-head" data-reveal>
+      <h2>最新上架</h2>
+      <span class="eyebrow">Recent Works</span>
+      <span class="spacer"></span>
+      <a class="sec-more" href="/works">全部作品 →</a>
+    </header>
+    <div class="masonry pswp-gallery">
+      {recent.map((w, i) => <WorkCard work={w} index={i} />)}
+    </div>
+  </section>
+  <Lightbox />
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+    padding: clamp(3.5rem, 9vw, 7rem) 0 clamp(3rem, 7vw, 5rem);
+  }
+  .hero-name {
+    font-family: var(--font-latin);
+    font-size: clamp(3rem, 7.5vw, 5.5rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    margin-top: 1.1rem;
+  }
+  .hero-name em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .hero-line {
+    margin-top: 1.4rem;
+    font-size: 1.0625rem;
+    letter-spacing: 0.14em;
+  }
+  .hero-sub {
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+  }
+  .hero-cta {
+    margin-top: 2.25rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.7rem 1.4rem;
+    border: 1px solid var(--ink);
+    font-size: 0.9375rem;
+    letter-spacing: 0.12em;
+    transition:
+      background 0.35s var(--ease),
+      color 0.35s var(--ease);
+  }
+  .btn:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .btn:hover .eyebrow {
+    color: inherit;
+    opacity: 0.8;
+  }
+  .btn.ghost {
+    border-color: var(--line);
+    color: var(--muted);
+  }
+  .btn.ghost:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+    background: transparent;
+  }
+
+  .hero-cap {
+    margin-top: 0.9rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .hero-vert {
+    position: absolute;
+    right: 0;
+    top: clamp(2rem, 6vw, 4rem);
+    writing-mode: vertical-rl;
+    font-size: 0.8125rem;
+    letter-spacing: 0.5em;
+    color: var(--muted);
+    opacity: 0.75;
+  }
+
+  .latest {
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+    .hero-vert {
+      display: none;
+    }
+  }
+</style>
