@@ -25,6 +25,8 @@ jobs:
         with:
           # Astro 7 要求 Node >= 22.23.4（action 默认 20 会构建失败）
           node-version: 24
+          # Firefly 使用 pnpm（packageManager: pnpm@11.22.0）
+          package-manager: pnpm@11.22.0
 
   deploy:
     needs: build

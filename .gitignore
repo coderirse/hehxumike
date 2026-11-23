@@ -1,12 +1,55 @@
-# 依赖与构建产物
-node_modules/
+# build output
 dist/
+
+# generated vndb covers
+public/vndb-covers/
+
+# generated types
 .astro/
 
-# 原始超清图不入库（见 AGENTS.md §6）
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+.vercel
+
+package-lock.json
+bun.lockb
+yarn.lock
+
+# ide
+.idea
+*.iml
+
+# docs
+Firefly-docs/
+
+# lite 版本
+Firefly-Lite/
+
+cache/
+package/
+.obsidian/
+
+# vibe coding
+.codex*
+.claude
+.mimocode
+
+# 原始超清图不入库
 _originals/
 
 # 工具本地缓存
 .v2c/
-
-.DS_Store

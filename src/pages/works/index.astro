@@ -1,0 +1,115 @@
+---
+import PostCard from "@/components/layout/PostCard.astro";
+import { siteConfig } from "@/config";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getSortedPosts } from "@/utils/content-utils";
+import { getPostUrlBySlug } from "@/utils/url-utils";
+
+const posts = await getSortedPosts();
+const seriesList = [
+	...new Set(posts.map((post) => post.data.series).filter(Boolean)),
+];
+const title = "作品";
+const description = `共 ${posts.length} 件 · 按完成时间倒序`;
+const columnWidth = siteConfig.postListLayout.grid.columnWidth || 320;
+---
+
+<MainGridLayout title={title} description={description}>
+	<section class="page-shell works-shell">
+		<div class="card-base p-4 md:p-6">
+			<div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+				<p class="text-sm text-neutral-500 dark:text-neutral-400">{description}</p>
+				<a href="/series/" class="text-sm text-(--primary) transition hover:underline">按系列浏览 →</a>
+			</div>
+			<works-filter class="mb-4 flex flex-wrap items-center gap-2">
+				<button
+					type="button"
+					class="category-pill px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-200"
+					data-filter="all"
+					data-active
+				>
+					全部
+				</button>
+				{seriesList.map((series) => (
+					<button
+						type="button"
+						class="category-pill px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-200"
+						data-filter={series}
+					>
+						{series}
+					</button>
+				))}
+			</works-filter>
+
+			<div
+				class="works-grid post-grid-auto grid-mode"
+				style={`--post-card-min-width: ${columnWidth}px;`}
+			>
+				{posts.map((entry, index) => (
+					<div class="works-cell" data-series={entry.data.series || ""}>
+						<PostCard
+							entry={entry}
+							title={entry.data.title}
+							tags={entry.data.tags}
+							category={entry.data.category}
+							published={entry.data.published}
+							updated={entry.data.updated}
+							url={getPostUrlBySlug(entry.id)}
+							image={entry.data.image}
+							description={entry.data.description}
+							draft={entry.data.draft}
+							pinned={entry.data.pinned}
+							password={!!entry.data.password}
+							loading={index < 2 ? "eager" : "lazy"}
+							class="h-full"
+							style={`animation-delay: ${index * 50}ms;`}
+						/>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<script slot="head" is:inline>
+		if (!customElements.get("works-filter")) {
+			class WorksFilter extends HTMLElement {
+				connectedCallback() {
+					this.addEventListener("click", (event) => {
+						const button = event.target.closest("button[data-filter]");
+						if (!button) return;
+						this.querySelectorAll("button[data-filter]").forEach((item) => {
+							item.removeAttribute("data-active");
+						});
+						button.setAttribute("data-active", "");
+						const filter = button.dataset.filter;
+						const grid = this.closest(".works-shell")?.querySelector(".works-grid");
+						if (!grid) return;
+						grid.querySelectorAll(".works-cell").forEach((cell) => {
+							cell.hidden =
+								filter !== "all" && cell.dataset.series !== filter;
+						});
+					});
+				}
+			}
+			customElements.define("works-filter", WorksFilter);
+		}
+	</script>
+
+	<style>
+		.works-grid {
+			display: grid;
+			grid-template-columns: repeat(
+				auto-fill,
+				minmax(min(100%, 280px), 1fr)
+			);
+			gap: 1rem;
+			align-items: stretch;
+		}
+		.works-cell {
+			min-width: 0;
+		}
+		.works-cell[hidden] {
+			display: none;
+		}
+	</style>
+</MainGridLayout>
