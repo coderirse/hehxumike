@@ -15,7 +15,7 @@ export const zh_CN: Translation = {
 	[Key.other]: "其他",
 
 	// 导航栏菜单分组
-	[Key.navArticles]: "文章",
+	[Key.navArticles]: "作品",
 	[Key.navSocial]: "社交",
 	[Key.navMine]: "我的",
 	[Key.navAbout]: "关于",
@@ -27,9 +27,9 @@ export const zh_CN: Translation = {
 	[Key.allCategories]: "全部分类",
 	[Key.allTags]: "全部标签",
 	[Key.allSeries]: "全部系列",
-	[Key.recentPosts]: "最新文章",
-	[Key.postList]: "文章列表",
-	[Key.tableOfContents]: "文章目录",
+	[Key.recentPosts]: "最新作品",
+	[Key.postList]: "作品列表",
+	[Key.tableOfContents]: "作品目录",
 	[Key.tocEmpty]: "当前页面没有目录",
 	[Key.music]: "音乐",
 	[Key.dynamic]: "动态",
@@ -110,8 +110,8 @@ export const zh_CN: Translation = {
 	[Key.wordsCount]: "字",
 	[Key.minuteCount]: "分钟",
 	[Key.minutesCount]: "分钟",
-	[Key.postCount]: "篇文章",
-	[Key.postsCount]: "篇文章",
+	[Key.postCount]: "件作品",
+	[Key.postsCount]: "件作品",
 	[Key.tagsCount]: "个标签",
 	[Key.noData]: "暂无数据",
 
@@ -311,17 +311,17 @@ export const zh_CN: Translation = {
 	// RSS页面
 	[Key.rss]: "RSS 订阅",
 	[Key.rssDescription]: "订阅获取最新更新",
-	[Key.rssSubtitle]: "通过 RSS 订阅，第一时间获取最新文章和动态",
+	[Key.rssSubtitle]: "通过 RSS 订阅，第一时间获取最新作品和动态",
 	[Key.rssLink]: "RSS 链接",
 	[Key.rssCopyToReader]: "复制链接到你的 RSS 阅读器",
 	[Key.rssCopyLink]: "复制链接",
-	[Key.rssLatestPosts]: "最新文章",
+	[Key.rssLatestPosts]: "最新作品",
 	[Key.rssWhatIsRSS]: "什么是 RSS？",
 	[Key.rssWhatIsRSSDescription]:
 		"RSS（Really Simple Syndication）是一种用于发布经常更新内容的标准格式。通过 RSS，你可以：",
 	[Key.rssBenefit1]: "及时获取网站最新内容，无需手动访问",
 	[Key.rssBenefit2]: "在一个地方管理多个网站的订阅",
-	[Key.rssBenefit3]: "避免错过重要更新和文章",
+	[Key.rssBenefit3]: "避免错过重要更新和作品",
 	[Key.rssBenefit4]: "享受无广告的纯净阅读体验",
 	[Key.rssHowToUse]: "推荐使用 Feedly、Inoreader 或其他 RSS 阅读器来订阅本站。",
 	[Key.rssCopied]: "RSS 链接已复制到剪贴板！",
@@ -330,7 +330,7 @@ export const zh_CN: Translation = {
 	// Atom 页面
 	[Key.atom]: "Atom 订阅",
 	[Key.atomDescription]: "订阅获取最新更新",
-	[Key.atomSubtitle]: "通过 Atom 订阅，第一时间获取最新文章和动态",
+	[Key.atomSubtitle]: "通过 Atom 订阅，第一时间获取最新作品和动态",
 	[Key.atomLink]: "Atom 链接",
 	[Key.atomCopyToReader]: "复制链接到你的 Atom 阅读器",
 	[Key.atomCopied]: "Atom 链接已复制到剪贴板！",
@@ -433,7 +433,7 @@ export const zh_CN: Translation = {
 
 	// 站点统计
 	[Key.siteStats]: "站点统计",
-	[Key.siteStatsPostCount]: "文章",
+	[Key.siteStatsPostCount]: "作品",
 	[Key.siteStatsDynamicCount]: "动态",
 	[Key.siteStatsCategoryCount]: "分类",
 	[Key.siteStatsTagCount]: "标签",

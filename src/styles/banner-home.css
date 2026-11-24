@@ -238,6 +238,74 @@ html.is-page-transitioning .banner-home-text-overlay {
     }
 }
 
+/* ===== 画作站 banner：文字靠左，左侧压暗，避开 05 号人物 ===== */
+.banner-home-text-overlay--left {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding: clamp(1.5rem, 6vw, 6rem) !important;
+}
+
+.banner-home-text-overlay--left::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(4, 10, 24, 0.9) 0%,
+        rgba(4, 10, 24, 0.62) 34%,
+        rgba(4, 10, 24, 0.22) 58%,
+        rgba(4, 10, 24, 0) 78%
+    );
+    pointer-events: none;
+}
+
+.banner-home-text-overlay--left .banner-home-text-inner {
+    width: min(36rem, 62vw) !important;
+    max-width: 36rem;
+    text-align: left !important;
+    margin-bottom: 0 !important;
+}
+
+.banner-home-text-overlay--left .banner-title {
+    border-left: 4px solid var(--accent-crimson, #c8102e);
+    padding-left: 1rem;
+    text-shadow: 2px 2px 16px rgba(0, 0, 0, 0.65);
+}
+
+.banner-home-text-overlay--left .banner-subtitle {
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
+}
+
+.banner-home-text-overlay--left .banner-links {
+    justify-content: flex-start !important;
+}
+
+@media (max-width: 767px) {
+    .banner-home-text-overlay--left {
+        align-items: flex-end !important;
+        padding: 1.5rem 1.25rem 16vh !important;
+    }
+
+    .banner-home-text-overlay--left::before {
+        background: linear-gradient(
+            180deg,
+            rgba(4, 10, 24, 0.12) 0%,
+            rgba(4, 10, 24, 0.32) 42%,
+            rgba(4, 10, 24, 0.92) 100%
+        );
+    }
+
+    .banner-home-text-overlay--left .banner-home-text-inner {
+        width: 100% !important;
+        max-width: none;
+    }
+
+    .banner-home-text-overlay--left .banner-title {
+        border-left-width: 3px;
+        padding-left: 0.75rem;
+    }
+}
+
 /* 基于屏幕高度的banner优化 - 优先显示banner */
 /* 极小高度屏幕 (高度 ≤ 500px) - 仅移动端 */
 @media (max-width: 1023px) and (max-height: 500px) {

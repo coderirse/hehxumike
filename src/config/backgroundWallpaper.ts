@@ -1,7 +1,7 @@
 import type { BackgroundWallpaperConfig } from "@/types/backgroundWallpaper";
 import { CONTACT_LINKS } from "./contactConfig";
 
-// 首页 banner：先用现有场景占位图，真实横幅画到位后替换
+// 首页 banner：《暮色将至》；文字靠左与暗渐变样式在 banner-home.css
 const bannerLinks = CONTACT_LINKS.filter((link) =>
 	["小红书", "微博", "X", "邮箱"].includes(link.cn),
 ).map((link) => ({

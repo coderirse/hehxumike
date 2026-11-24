@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from "astro:content";
+import WorkCard from "@/components/layout/WorkCard.astro";
+
+interface Props {
+	posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<div class="works-masonry">
+	{
+		posts.map((entry, index) => (
+			<div
+				class="works-cell onload-animation"
+				data-series={entry.data.series || ""}
+				style={`animation-delay: calc(var(--content-delay) + ${index * 45}ms);`}
+			>
+				<WorkCard entry={entry} loading="eager" />
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.works-masonry {
+		column-width: 280px;
+		column-gap: 1rem;
+	}
+
+	.works-cell {
+		display: block;
+		width: 100%;
+		margin: 0 0 1rem;
+		break-inside: avoid;
+		-webkit-column-break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.works-cell[hidden] {
+		display: none !important;
+	}
+</style>

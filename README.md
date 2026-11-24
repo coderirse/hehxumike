@@ -16,8 +16,8 @@ HEHXumike 的个人画作网站，基于 [Firefly](https://github.com/CuteLeaf/F
 
 | 地址 | 内容 |
 |---|---|
-| `/` | 首页：banner + 资料卡 + 最新作品 + 动态 |
-| `/works/` | 全部作品，支持系列筛选 |
+| `/` | 首页：banner + 资料卡 + 作品瀑布流 + 动态 |
+| `/works/` | 全部作品，全宽瀑布流，支持系列筛选 |
 | `/works/<slug>/` | 作品详情 |
 | `/series/` | 系列 |
 | `/about/` | 关于 |
@@ -28,14 +28,13 @@ HEHXumike 的个人画作网站，基于 [Firefly](https://github.com/CuteLeaf/F
 
 ## 当前阶段
 
-- 10 件占位作品在 `src/content/posts/placeholder-*`，图片来自占位图库，待换原作
-- 首页 banner：`src/assets/images/custom/banner.jpg`
-- 头像：`src/assets/images/custom/avatar.jpg`
-- Favicon：`public/favicon/hehxumike-*.png`
+- 8 件真实作品已上线：角色插画 6 / 风景 1 / 幻想 1，保持原图比例瀑布流
+- 首页 banner 用《暮色将至》，头像取自《蓝焰》
+- Favicon：`public/favicon/hehxumike-*.png`（正式图标待补）
 - 社交链接：`src/config/contactConfig.ts`（当前 `#` 占位）
 - 关于文案：`src/content/spec/about.md`
-- 主题色：`src/config/siteConfig.ts` 的 `themeColor.hue`（暂定 345 樱花粉）
-- 预览阶段全站 `noindex`（`src/layouts/Layout.astro`），正式作品上线后移除
+- 主题：深蓝（hue 250）+ 绯红主色；主色固定在 `src/styles/variables.styl`
+- 全站 `noindex` 已移除
 
 ## 常用命令
 
@@ -53,21 +52,23 @@ pnpm new:post # Firefly 文章脚手架（可选）
 2. Frontmatter 示例：
 
 ```yaml
-title: 春与樱
-published: 2026-11-02
-description: Sakura · 角色插画 · 2026
-image: ./<slug>/cover.jpg
-tags: ["角色插画"]
-category: 角色插画
-series: 角色插画
+title: 日照金山
+published: 2026-11-24T00:00:00.000Z
+description: 雪山、湖面与两个人的黄昏。
+image: ./golden-mountain/cover.jpg
+tags: ["风景", "数字插画"]
+category: 风景
+series: 风景
 seriesOrder: 1
+order: 2
 pinned: false
 draft: false
 author: HEHXumike
 comment: false
 ```
 
-3. 正文放作品图与手记；图片长边 ≤ 2400、单张 ≤ 800KB。
+- `order` 控制首页/作品页策展顺序，`seriesOrder` 控制系列内顺序。
+- 正文放作品图与手记；图片长边 ≤ 2400、单张 ≤ 800KB。
 4. 原始超清图放 `_originals/`（gitignore，不入库）。
 
 ## 部署

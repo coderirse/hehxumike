@@ -3,7 +3,7 @@ import type { AnnouncementConfig } from "../types/announcementConfig";
 export const announcementConfig: AnnouncementConfig = {
 	title: "画作集上线",
 	content:
-		"先把手边的画挂上墙；原作高清图与更多系列随后补上。",
+		"八幅作品已挂上墙：角色、风景与幻想，按系列慢慢看。",
 	closable: true,
 	link: {
 		enable: true,

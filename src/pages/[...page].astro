@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Pagination from "@/components/common/Pagination.astro";
-import PostPage from "@/components/layout/PostPage.astro";
+import WorkGallery from "@/components/layout/WorkGallery.astro";
 import { siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
@@ -28,7 +28,25 @@ const heading =
 ---
 
 <MainGridLayout heading={heading}>
-  <PostPage page={page} />
+  <section class="page-shell works-shell">
+    <div class="card-base p-4 md:p-6">
+      <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[0.22em] text-(--primary)">
+            Selected Works
+          </p>
+          <h2 class="mt-1 text-2xl font-bold text-90">精选作品</h2>
+          <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+            共 {page.total} 件 · 按策展顺序
+          </p>
+        </div>
+        <a href="/works/" class="text-sm text-(--primary) transition hover:underline">
+          全部作品与系列筛选 →
+        </a>
+      </div>
+      <WorkGallery posts={page.data} />
+    </div>
+  </section>
   {
     page.total > page.size && (
       <Pagination

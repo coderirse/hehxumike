@@ -65,3 +65,14 @@ html[data-category-style="rectangle"] .category-bar .category-pill {
 html[data-category-style="rectangle"] .category-bar .category-pill .pill-count {
   border-radius: 0.375rem;
 }
+
+/* 暗色下主色偏亮，激活胶囊改用深色文字保证对比度 */
+:root.dark .category-pill[data-active],
+:root.dark .category-pill[data-category-name=""][data-active],
+:root.dark .category-pill[data-category-name=""][data-active]:hover {
+  color: oklch(0.20 0.03 22);
+}
+:root.dark .category-pill[data-active] .pill-count {
+  background: rgba(0, 0, 0, 0.14);
+  opacity: 0.8;
+}

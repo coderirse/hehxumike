@@ -68,8 +68,8 @@ export const siteConfig: SiteConfig = {
 	// 主题色
 	themeColor: {
 		// 主题色的默认色相，范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345
-		// 暂定樱花粉；真实作品到位后可从主色重新提取
-		hue: 345,
+		// 深蓝底色（250）+ 绯红主色（在 variables.styl 中固定为 --primary）
+		hue: 250,
 		// 默认模式："light" 亮色，"dark" 暗色，"system" 跟随系统
 		defaultMode: "system",
 	},
@@ -184,7 +184,7 @@ export const siteConfig: SiteConfig = {
 		// PostMeta 元数据显示控制
 		meta: {
 			// 是否显示发布日期
-			showPublished: true,
+			showPublished: false,
 			// 是否显示分类
 			showCategory: false,
 			// 是否显示标签
@@ -200,7 +200,7 @@ export const siteConfig: SiteConfig = {
 		// 如果tagsPosition设置为"bottom"，则stats将不显示
 		stats: {
 			// 是否显示发布日期
-			showPublished: true,
+			showPublished: false,
 			// 是否显示字数
 			showWords: false,
 			// 是否显示阅读时间

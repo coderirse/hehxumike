@@ -1,24 +1,34 @@
 ---
-import PostCard from "@/components/layout/PostCard.astro";
-import { siteConfig } from "@/config";
+import WorkGallery from "@/components/layout/WorkGallery.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import { getSortedPosts } from "@/utils/content-utils";
-import { getPostUrlBySlug } from "@/utils/url-utils";
 
 const posts = await getSortedPosts();
+const seriesOrder = ["角色插画", "风景", "幻想"];
 const seriesList = [
 	...new Set(posts.map((post) => post.data.series).filter(Boolean)),
-];
+].sort((a, b) => seriesOrder.indexOf(a) - seriesOrder.indexOf(b));
+const seriesCounts = Object.fromEntries(
+	seriesList.map((series) => [
+		series,
+		posts.filter((post) => post.data.series === series).length,
+	]),
+);
 const title = "作品";
-const description = `共 ${posts.length} 件 · 按完成时间倒序`;
-const columnWidth = siteConfig.postListLayout.grid.columnWidth || 320;
+const description = `共 ${posts.length} 件 · 精选作品`;
 ---
 
 <MainGridLayout title={title} description={description}>
-	<section class="page-shell works-shell">
+	<section class="page-shell works-index-shell">
 		<div class="card-base p-4 md:p-6">
-			<div class="mb-3 flex flex-wrap items-center justify-between gap-2">
-				<p class="text-sm text-neutral-500 dark:text-neutral-400">{description}</p>
+			<div class="mb-3 flex flex-wrap items-end justify-between gap-2">
+				<div>
+					<p class="text-xs font-medium uppercase tracking-[0.22em] text-(--primary) lg:hidden">
+						Works
+					</p>
+					<h2 class="mt-1 text-2xl font-bold text-90 lg:hidden">作品</h2>
+					<p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{description}</p>
+				</div>
 				<a href="/series/" class="text-sm text-(--primary) transition hover:underline">按系列浏览 →</a>
 			</div>
 			<works-filter class="mb-4 flex flex-wrap items-center gap-2">
@@ -27,46 +37,23 @@ const columnWidth = siteConfig.postListLayout.grid.columnWidth || 320;
 					class="category-pill px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-200"
 					data-filter="all"
 					data-active
+					aria-pressed="true"
 				>
-					全部
+					全部 <span class="pill-count">{posts.length}</span>
 				</button>
 				{seriesList.map((series) => (
 					<button
 						type="button"
 						class="category-pill px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-200"
 						data-filter={series}
+						aria-pressed="false"
 					>
-						{series}
+						{series} <span class="pill-count">{seriesCounts[series]}</span>
 					</button>
 				))}
 			</works-filter>
 
-			<div
-				class="works-grid post-grid-auto grid-mode"
-				style={`--post-card-min-width: ${columnWidth}px;`}
-			>
-				{posts.map((entry, index) => (
-					<div class="works-cell" data-series={entry.data.series || ""}>
-						<PostCard
-							entry={entry}
-							title={entry.data.title}
-							tags={entry.data.tags}
-							category={entry.data.category}
-							published={entry.data.published}
-							updated={entry.data.updated}
-							url={getPostUrlBySlug(entry.id)}
-							image={entry.data.image}
-							description={entry.data.description}
-							draft={entry.data.draft}
-							pinned={entry.data.pinned}
-							password={!!entry.data.password}
-							loading={index < 2 ? "eager" : "lazy"}
-							class="h-full"
-							style={`animation-delay: ${index * 50}ms;`}
-						/>
-					</div>
-				))}
-			</div>
+			<WorkGallery posts={posts} />
 		</div>
 	</section>
 
@@ -79,10 +66,12 @@ const columnWidth = siteConfig.postListLayout.grid.columnWidth || 320;
 						if (!button) return;
 						this.querySelectorAll("button[data-filter]").forEach((item) => {
 							item.removeAttribute("data-active");
+							item.setAttribute("aria-pressed", "false");
 						});
 						button.setAttribute("data-active", "");
+						button.setAttribute("aria-pressed", "true");
 						const filter = button.dataset.filter;
-						const grid = this.closest(".works-shell")?.querySelector(".works-grid");
+						const grid = this.closest(".works-index-shell")?.querySelector(".works-masonry");
 						if (!grid) return;
 						grid.querySelectorAll(".works-cell").forEach((cell) => {
 							cell.hidden =
@@ -95,21 +84,16 @@ const columnWidth = siteConfig.postListLayout.grid.columnWidth || 320;
 		}
 	</script>
 
-	<style>
-		.works-grid {
-			display: grid;
-			grid-template-columns: repeat(
-				auto-fill,
-				minmax(min(100%, 280px), 1fr)
-			);
-			gap: 1rem;
-			align-items: stretch;
+	<style is:global>
+		/* /works 是纯画廊页：让作品占满内容宽度，不保留左右侧栏 */
+		#main-grid:has(.works-index-shell) {
+			grid-template-columns: minmax(0, 1fr) !important;
 		}
-		.works-cell {
-			min-width: 0;
+		#main-grid:has(.works-index-shell) > :not(#content-column) {
+			display: none !important;
 		}
-		.works-cell[hidden] {
-			display: none;
+		#main-grid:has(.works-index-shell) #mobile-bottom-sidebar {
+			display: none !important;
 		}
 	</style>
 </MainGridLayout>

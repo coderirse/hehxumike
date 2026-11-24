@@ -359,48 +359,50 @@ const seriesData = await getSeriesPosts(entry);
         )
       }
 
-      <!-- title -->
-      {
-        !usePostCoverOverlay && (
-          <div class="relative onload-animation">
-            <div
-              data-pagefind-body
-              data-pagefind-weight="10"
-              data-pagefind-meta="title"
-              class="transition w-full block font-bold mb-3
-                        text-3xl md:text-[2.25rem]/[2.75rem]
-                        text-black/90 dark:text-white/90
-                        md:before:w-1 before:h-5 before:rounded-md before:bg-(--primary)
-                        before:absolute before:top-3 before:-left-4.5"
-            >
-              {entry.data.title}
+      <div class="post-heading">
+        <!-- title -->
+        {
+          !usePostCoverOverlay && (
+            <div class="relative onload-animation">
+              <div
+                data-pagefind-body
+                data-pagefind-weight="10"
+                data-pagefind-meta="title"
+                class="transition w-full block font-bold mb-3
+                          text-3xl md:text-[2.25rem]/[2.75rem]
+                          text-black/90 dark:text-white/90
+                          md:before:w-1 before:h-5 before:rounded-md before:bg-(--primary)
+                          before:absolute before:top-3 before:-left-4.5"
+              >
+                {entry.data.title}
+              </div>
             </div>
-          </div>
-        )
-      }
+          )
+        }
 
-      <!-- metadata -->
-      {
-        !usePostCoverOverlay && (
-          <div class="onload-animation">
-            <PostMetadata
-              className="mb-5"
-              published={entry.data.published}
-              updated={entry.data.updated}
-              tags={entry.data.tags}
-              category={entry.data.category || undefined}
-              id={entry.id}
-              showCategory={false}
-              showTags={false}
-            />
-            {
-              !showPostCover && (
-                <div class="border-(--line-divider) border-dashed border-b mt-3 mb-5" />
-              )
-            }
-          </div>
-        )
-      }
+        <!-- metadata -->
+        {
+          !usePostCoverOverlay && (
+            <div class="onload-animation">
+              <PostMetadata
+                className="mb-5"
+                published={entry.data.published}
+                updated={entry.data.updated}
+                tags={entry.data.tags}
+                category={entry.data.category || undefined}
+                id={entry.id}
+                showCategory={false}
+                showTags={false}
+              />
+              {
+                !showPostCover && (
+                  <div class="border-(--line-divider) border-dashed border-b mt-3 mb-5" />
+                )
+              }
+            </div>
+          )
+        }
+      </div>
 
       {
         seriesData && (
@@ -745,5 +747,12 @@ const seriesData = await getSeriesPosts(entry);
 	}
 	#main-grid[data-grid-hide-sidebar-on-post="true"] #mobile-bottom-sidebar {
 		display: none !important;
+	}
+
+	/* 桌面端 banner 已显示作品标题与简介，内容区不再重复，画作直接上移 */
+	@media (min-width: 1024px) {
+		.post-heading {
+			display: none !important;
+		}
 	}
 </style>
