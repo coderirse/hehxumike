@@ -1,5 +1,5 @@
 ---
-title: 日照金山
+title: 𝐆𝐨𝐥𝐝𝐞𝐧 𝐇𝐨𝐮𝐫
 published: 2026-11-24T00:00:00.000Z
 description: 雪山、湖面与两个人的黄昏。
 image: ./golden-mountain/cover.jpg
@@ -17,7 +17,7 @@ author: HEHXumike
 comment: false
 ---
 
-![《日照金山》](./golden-mountain/cover.jpg)
+![𝐆𝐨𝐥𝐝𝐞𝐧 𝐇𝐨𝐮𝐫](./golden-mountain/cover.jpg)
 
 > 风景 · 2026 · 板绘（数字插画）
 

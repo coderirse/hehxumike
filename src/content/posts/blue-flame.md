@@ -1,5 +1,5 @@
 ---
-title: 蓝焰
+title: 𝐓𝐞𝐚𝐫𝐬
 published: 2026-11-24T00:00:00.000Z
 description: 蓝发与红瞳，笑意里藏着泪。
 image: ./blue-flame/cover.jpg
@@ -17,7 +17,7 @@ author: HEHXumike
 comment: false
 ---
 
-![《蓝焰》](./blue-flame/cover.jpg)
+![𝐓𝐞𝐚𝐫𝐬](./blue-flame/cover.jpg)
 
 > 角色插画 · 2026 · 板绘（数字插画）
 

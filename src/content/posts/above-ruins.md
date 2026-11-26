@@ -1,5 +1,5 @@
 ---
-title: 废墟之上
+title: 𝙗𝙖𝙧𝙧𝙚𝙣
 published: 2026-11-24T00:00:00.000Z
 description: 高架桥下，一座没有人的城。
 image: ./above-ruins/cover.jpg
@@ -17,7 +17,7 @@ author: HEHXumike
 comment: false
 ---
 
-![《废墟之上》](./above-ruins/cover.jpg)
+![𝙗𝙖𝙧𝙧𝙚𝙣](./above-ruins/cover.jpg)
 
 > 角色插画 · 2026 · 板绘（数字插画）
 

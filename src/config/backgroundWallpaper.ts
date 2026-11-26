@@ -1,7 +1,7 @@
 import type { BackgroundWallpaperConfig } from "@/types/backgroundWallpaper";
 import { CONTACT_LINKS } from "./contactConfig";
 
-// 首页 banner：《暮色将至》；文字靠左与暗渐变样式在 banner-home.css
+// 首页 banner：《十八岁的春天》；文字靠左与暗渐变样式在 banner-home.css
 const bannerLinks = CONTACT_LINKS.filter((link) =>
 	["小红书", "微博", "X", "邮箱"].includes(link.cn),
 ).map((link) => ({
@@ -23,15 +23,16 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		playerMode: "random",
 		homeText: {
 			enable: true,
-			title: "HEHXumike",
+			title: "𝐇𝐄𝐇𝐗𝐮𝐦𝐢𝐤𝐞",
 			titleSize: "4.5rem",
 			subtitle: [
-				"把每一张画，挂在它应得的墙上。",
-				"数字插画 · 板绘",
-				"Character Illustrations & Fan Art",
-				"Paintings from the night.",
+				"`⎚⩊⎚´ ﾉｼﾞ",
+				"ദ്ദി◝ ⩊ ◜.ᐟ",
+				"ᕙ(  •̀ ᗜ •́  )ᕗ",
 			],
+			note: "procreate，sai，photoshop，csp，以我时间为代价，请给予我力量",
 			subtitleSize: "1.5rem",
+			subtitleEffect: "fade",
 			typewriter: {
 				enable: true,
 				speed: 100,

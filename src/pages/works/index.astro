@@ -26,7 +26,7 @@ const description = `共 ${posts.length} 件 · 精选作品`;
 					<p class="text-xs font-medium uppercase tracking-[0.22em] text-(--primary) lg:hidden">
 						Works
 					</p>
-					<h2 class="mt-1 text-2xl font-bold text-90 lg:hidden">作品</h2>
+					<h2 class="display-serif mt-1 text-2xl font-bold text-90 lg:hidden">作品</h2>
 					<p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{description}</p>
 				</div>
 				<a href="/series/" class="text-sm text-(--primary) transition hover:underline">按系列浏览 →</a>
@@ -94,6 +94,11 @@ const description = `共 ${posts.length} 件 · 精选作品`;
 		}
 		#main-grid:has(.works-index-shell) #mobile-bottom-sidebar {
 			display: none !important;
+		}
+		/* 桌面端 banner 里的“作品”与首页“精选作品”保持同一种衬线气质 */
+		body:has(.works-index-shell) .banner-page-title {
+			font-family: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", "STSong", serif;
+			letter-spacing: 0.02em;
 		}
 	</style>
 </MainGridLayout>

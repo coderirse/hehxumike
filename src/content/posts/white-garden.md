@@ -1,5 +1,5 @@
 ---
-title: 白花之庭
+title: 𝑖𝑛 𝑡ℎ𝑒 𝑝𝑎𝑠𝑡
 published: 2026-11-24T00:00:00.000Z
 description: 白花落满庭院，白裙不染尘埃。
 image: ./white-garden/cover.jpg
@@ -17,7 +17,7 @@ author: HEHXumike
 comment: false
 ---
 
-![《白花之庭》](./white-garden/cover.jpg)
+![𝑖𝑛 𝑡ℎ𝑒 𝑝𝑎𝑠𝑡](./white-garden/cover.jpg)
 
 > 角色插画 · 2026 · 板绘（数字插画）
 

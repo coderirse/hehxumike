@@ -1,5 +1,5 @@
 ---
-title: 白夜
+title: 𝗦𝘁𝗮𝗿𝘁
 published: 2026-11-24T00:00:00.000Z
 description: 白色把世界调成静音。
 image: ./white-night/cover.jpg
@@ -17,7 +17,7 @@ author: HEHXumike
 comment: false
 ---
 
-![《白夜》](./white-night/cover.jpg)
+![𝗦𝘁𝗮𝗿𝘁](./white-night/cover.jpg)
 
 > 角色插画 · 2026 · 板绘（数字插画）
 

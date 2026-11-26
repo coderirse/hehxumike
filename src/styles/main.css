@@ -681,3 +681,9 @@ html {
 .pagination-info {
   @apply text-sm text-(--text-secondary) text-center mb-2;
 }
+
+/* 画作区中文标题：接近作品花体标题的衬线气质 */
+.display-serif {
+  font-family: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", "STSong", serif;
+  letter-spacing: 0.02em;
+}

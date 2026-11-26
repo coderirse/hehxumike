@@ -21,6 +21,8 @@ export type BackgroundWallpaperConfig = {
 			subtitle?: string | string[]; // 副标题，支持单个字符串或字符串数组
 			titleSize?: string; // 主标题字体大小，如 "3.5rem"
 			subtitleSize?: string; // 副标题字体大小，如 "1.5rem"
+			subtitleEffect?: "typewriter" | "fade"; // 多条副标题的切换方式，默认打字机；fade 为完整淡入淡出轮播
+			note?: string; // 副标题下方的固定小字，例如作者工具签名
 			typewriter?: {
 				enable: boolean; // 是否启用打字机效果
 				speed: number; // 打字速度（毫秒）

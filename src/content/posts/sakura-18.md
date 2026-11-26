@@ -1,5 +1,5 @@
 ---
-title: 十八岁的春天
+title: 𝙃𝙖𝙥𝙥𝙮 18𝙩𝙝 𝙗𝙞𝙧𝙩𝙝𝙙𝙖𝙮
 published: 2026-11-24T00:00:00.000Z
 description: 十八岁那年的春天，樱花落在肩上。
 image: ./sakura-18/cover.jpg
@@ -17,7 +17,7 @@ author: HEHXumike
 comment: false
 ---
 
-![《十八岁的春天》](./sakura-18/cover.jpg)
+![𝙃𝙖𝙥𝙥𝙮 18𝙩𝙝 𝙗𝙞𝙧𝙩𝙝𝙙𝙖𝙮](./sakura-18/cover.jpg)
 
 > 角色插画 · 2026 · 板绘（数字插画）
 

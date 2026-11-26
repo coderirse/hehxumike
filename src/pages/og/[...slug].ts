@@ -35,6 +35,39 @@ const OG_FONT_FAMILY = "Noto Sans SC";
 const OG_FONT_DIR = "node_modules/@fontsource-variable/noto-sans-sc";
 let ogFonts: FontDetails[] | undefined;
 
+// OG 字体没有数学花体字形，先转回普通英文，避免标题在分享图里变成豆腐块
+const MATH_ALPHANUMERIC_RANGES = [
+	{ start: 0x1d400, end: 0x1d419, base: "A" },
+	{ start: 0x1d41a, end: 0x1d433, base: "a" },
+	{ start: 0x1d434, end: 0x1d44d, base: "A" },
+	{ start: 0x1d44e, end: 0x1d467, base: "a" },
+	{ start: 0x1d468, end: 0x1d481, base: "A" },
+	{ start: 0x1d482, end: 0x1d49b, base: "a" },
+	{ start: 0x1d56c, end: 0x1d585, base: "A" },
+	{ start: 0x1d586, end: 0x1d59f, base: "a" },
+	{ start: 0x1d5d4, end: 0x1d5ed, base: "A" },
+	{ start: 0x1d5ee, end: 0x1d607, base: "a" },
+	{ start: 0x1d63c, end: 0x1d655, base: "A" },
+	{ start: 0x1d656, end: 0x1d66f, base: "a" },
+	{ start: 0x1d7ce, end: 0x1d7d7, base: "0" },
+] as const;
+
+const toPlainOgTitle = (title: string): string =>
+	Array.from(title)
+		.map((char) => {
+			const code = char.codePointAt(0);
+			if (code === undefined) return char;
+			if (code === 0x210e) return "h";
+			const range = MATH_ALPHANUMERIC_RANGES.find(
+				({ start, end }) => code >= start && code <= end,
+			);
+			if (!range) return char;
+			return String.fromCharCode(
+				range.base.charCodeAt(0) + (code - range.start),
+			);
+		})
+		.join("");
+
 const loadOgFonts = (): FontDetails[] => {
 	if (ogFonts) return ogFonts;
 
@@ -344,7 +377,7 @@ export async function GET({
 														display: "flex",
 														flexDirection: "column",
 													},
-													children: post.data.title,
+													children: toPlainOgTitle(post.data.title),
 												},
 											},
 										],

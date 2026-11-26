@@ -25,7 +25,18 @@ const homeTextLinksEnable = homeText?.linksEnable !== false;
                 )}
                 {homeText.subtitle && (
                     <div id="banner-subtitle" class="banner-subtitle text-white/90 leading-snug" style={{ fontSize: homeText.subtitleSize || "1.5rem" }} data-subtitles={JSON.stringify(homeText.subtitle)}>
-                        {homeText.typewriter?.enable ? (
+                        {homeText.subtitleEffect === "fade" && Array.isArray(homeText.subtitle) ? (
+                            <span class="banner-subtitle-rotator" aria-label={homeText.subtitle.join(" / ")}>
+                                {homeText.subtitle.map((text, index) => (
+                                    <span
+                                        class="banner-subtitle-item"
+                                        style={`animation-delay:${index * 3}s;animation-duration:${homeText.subtitle.length * 3}s`}
+                                    >
+                                        {text}
+                                    </span>
+                                ))}
+                            </span>
+                        ) : homeText.typewriter?.enable ? (
                             <TypewriterText
                                 text={homeText.subtitle}
                                 speed={homeText.typewriter.speed}
@@ -36,6 +47,9 @@ const homeTextLinksEnable = homeText?.linksEnable !== false;
                             initialRandomSubtitle
                         )}
                     </div>
+                )}
+                {homeText.note && (
+                    <p class="banner-note">{homeText.note}</p>
                 )}
                 {/* 横幅标题下方的链接图标（subtitle 的兄弟节点，避免被打字机/随机副标题的 textContent 覆盖清掉） */}
                 {homeTextLinksEnable && homeTextLinks && homeTextLinks.length > 0 && (
@@ -76,6 +90,8 @@ const homeTextLinksEnable = homeText?.linksEnable !== false;
     function setRandomSubtitle() {
         const subtitleElement = document.getElementById('banner-subtitle');
         if (!subtitleElement) return;
+        // fade 轮播自己管理内容，不能再被随机副标题覆盖
+        if (subtitleElement.querySelector('.banner-subtitle-rotator')) return;
 
         const subtitlesData = subtitleElement.dataset.subtitles;
         if (!subtitlesData) return;

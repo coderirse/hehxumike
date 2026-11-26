@@ -1,5 +1,5 @@
 ---
-title: 暮色将至
+title: 𝐓𝐡𝐞 𝐬𝐮𝐧𝐬𝐞𝐭
 published: 2026-11-24T00:00:00.000Z
 description: 黄昏城市，风从她身后经过。
 image: ./dusk-approaching/cover.jpg
@@ -17,7 +17,7 @@ author: HEHXumike
 comment: false
 ---
 
-![《暮色将至》](./dusk-approaching/cover.jpg)
+![𝐓𝐡𝐞 𝐬𝐮𝐧𝐬𝐞𝐭](./dusk-approaching/cover.jpg)
 
 > 角色插画 · 2026 · 板绘（数字插画）
 

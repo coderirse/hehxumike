@@ -28,8 +28,9 @@ HEHXumike 的个人画作网站，基于 [Firefly](https://github.com/CuteLeaf/F
 
 ## 当前阶段
 
-- 8 件真实作品已上线：角色插画 6 / 风景 1 / 幻想 1，保持原图比例瀑布流
-- 首页 banner 用《暮色将至》，头像取自《蓝焰》
+- 8 件真实作品已上线：角色插画 6 / 风景 1 / 幻想 1，标题使用截图同款英文花体，保持原图比例瀑布流
+- 首页 banner 用《十八岁的春天》，头像用作者提供的黑白白发头像
+- 首页副标题为三条颜文字淡入淡出轮播，下方固定作者工具签名（procreate / sai / photoshop / csp）；OG 图里的花体标题会自动转普通英文，避免缺字
 - Favicon：`public/favicon/hehxumike-*.png`（正式图标待补）
 - 社交链接：`src/config/contactConfig.ts`（当前 `#` 占位）
 - 关于文案：`src/content/spec/about.md`
@@ -52,7 +53,7 @@ pnpm new:post # Firefly 文章脚手架（可选）
 2. Frontmatter 示例：
 
 ```yaml
-title: 日照金山
+title: 𝐆𝐨𝐥𝐝𝐞𝐧 𝐇𝐨𝐮𝐫
 published: 2026-11-24T00:00:00.000Z
 description: 雪山、湖面与两个人的黄昏。
 image: ./golden-mountain/cover.jpg
@@ -68,6 +69,7 @@ comment: false
 ```
 
 - `order` 控制首页/作品页策展顺序，`seriesOrder` 控制系列内顺序。
+- `title` 可以直接用英文花体；建议在 `description` 保留中文说明。
 - 正文放作品图与手记；图片长边 ≤ 2400、单张 ≤ 800KB。
 4. 原始超清图放 `_originals/`（gitignore，不入库）。
 

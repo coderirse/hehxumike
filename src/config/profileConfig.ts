@@ -2,7 +2,7 @@ import type { ProfileConfig } from "../types/profileConfig";
 import { CONTACT_LINKS } from "./contactConfig";
 
 export const profileConfig: ProfileConfig = {
-	// 头像：取自《蓝焰》的角色特写
+	// 头像：作者提供的黑白白发角色图
 	avatar: "assets/images/custom/avatar.jpg",
 
 	name: "HEHXumike",

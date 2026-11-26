@@ -1,5 +1,5 @@
 ---
-title: 夜之冠
+title: 𝕯𝖆𝖗𝖐𝕹𝖎𝖌𝖍𝖙
 published: 2026-11-24T00:00:00.000Z
 description: 她戴着夜色做的冠冕。
 image: ./night-crown/cover.jpg
@@ -17,7 +17,7 @@ author: HEHXumike
 comment: false
 ---
 
-![《夜之冠》](./night-crown/cover.jpg)
+![𝕯𝖆𝖗𝖐𝕹𝖎𝖌𝖍𝖙](./night-crown/cover.jpg)
 
 > 幻想 · 2026 · 板绘（数字插画）
 

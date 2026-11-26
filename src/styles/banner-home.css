@@ -412,6 +412,71 @@ html.is-page-transitioning .banner-home-text-overlay {
     font-family: var(--font-banner-subtitle, inherit);
 }
 
+/* 颜文字副标题：宽字符较多，手机上比普通英文副标题略大一点 */
+.banner-home-text-overlay--left .banner-subtitle {
+    font-size: clamp(1.05rem, 2.2vw, 1.9rem) !important;
+}
+
+@media (max-width: 767px) {
+    .banner-home-text-overlay--left .banner-subtitle {
+        font-size: 1.1rem !important;
+    }
+}
+
+/* 颜文字副标题轮播：始终显示完整一条，避免打字机把颜文字拆碎或整行消失 */
+.banner-subtitle-rotator {
+    display: inline-grid;
+    min-height: 1.5em;
+    vertical-align: top;
+}
+
+.banner-subtitle-item {
+    grid-area: 1 / 1;
+    opacity: 0;
+    white-space: nowrap;
+    animation-name: banner-subtitle-fade;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes banner-subtitle-fade {
+    0% { opacity: 0; }
+    2% { opacity: 1; }
+    30% { opacity: 1; }
+    33% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .banner-subtitle-item {
+        animation: none;
+    }
+    .banner-subtitle-item:first-child {
+        opacity: 1;
+    }
+}
+
+/* 副标题下方的作者工具签名 */
+.banner-note {
+    margin-top: 1rem;
+    max-width: 34rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.72);
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.55);
+    overflow-wrap: break-word;
+}
+
+@media (max-width: 767px) {
+    .banner-note {
+        margin-top: 0.7rem;
+        max-width: 15rem;
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+}
+
 /* 首页横幅标题下方的链接图标行（半透明圆按钮） */
 .banner-links {
     animation: banner-fadeInUp 0.3s ease-out 0.5s both;
